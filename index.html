@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICP Explorer — An 8-Bit Adventure</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0E031F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: monospace;
+    overflow: hidden;
+  }
+  #game-wrapper {
+    position: relative;
+    image-rendering: pixelated;
+  }
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+    border: 3px solid #522785;
+    border-radius: 4px;
+  }
+  #hud {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #quest-count {
+    background: rgba(14,3,31,0.85);
+    color: #29ABE2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #522785;
+  }
+  #cycles {
+    background: rgba(14,3,31,0.85);
+    color: #DDF730;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: 1px solid #522785;
+  }
+  #dialogue-box {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background: rgba(14,3,31,0.95);
+    border: 2px solid #29ABE2;
+    border-radius: 6px;
+    padding: 16px 20px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.5;
+    display: none;
+    z-index: 20;
+    pointer-events: auto;
+  }
+  #dialogue-box .speaker {
+    color: #DDF730;
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  #dialogue-box .text { color: #e0e0e0; }
+  #dialogue-box .prompt {
+    color: #29ABE2;
+    font-size: 12px;
+    margin-top: 8px;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  #quest-log {
+    position: absolute;
+    top: 40px;
+    right: 8px;
+    background: rgba(14,3,31,0.9);
+    border: 1px solid #522785;
+    border-radius: 6px;
+    padding: 12px 16px;
+    color: #e0e0e0;
+    font-size: 12px;
+    line-height: 1.6;
+    max-width: 280px;
+    display: none;
+    z-index: 15;
+    pointer-events: none;
+  }
+  #quest-log h3 { color: #DDF730; margin-bottom: 6px; font-size: 13px; }
+  #quest-log .quest { margin-bottom: 4px; }
+  #quest-log .quest.done { color: #29ABE2; text-decoration: line-through; opacity: 0.6; }
+  #title-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0E031F;
+    z-index: 100;
+  }
+  #title-screen h1 {
+    font-size: 36px;
+    color: #29ABE2;
+    text-shadow: 3px 3px 0 #522785;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  #title-screen h2 {
+    font-size: 16px;
+    color: #DDF730;
+    margin-bottom: 40px;
+    font-weight: normal;
+  }
+  #title-screen .start-prompt {
+    color: #fff;
+    font-size: 18px;
+    animation: blink 1.2s infinite;
+  }
+  #minimap {
+    position: absolute;
+    top: 40px;
+    left: 8px;
+    background: rgba(14,3,31,0.9);
+    border: 1px solid #522785;
+    border-radius: 4px;
+    padding: 4px;
+    z-index: 15;
+    pointer-events: none;
+  }
+  #completion-screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(14,3,31,0.97);
+    z-index: 100;
+    text-align: center;
+  }
+  #completion-screen h1 { font-size: 28px; color: #DDF730; margin-bottom: 12px; }
+  #completion-screen p { color: #e0e0e0; font-size: 15px; line-height: 1.6; max-width: 500px; margin-bottom: 8px; }
+  #completion-screen .stat { color: #29ABE2; font-size: 14px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div id="game-wrapper">
+  <canvas id="game" width="800" height="600"></canvas>
+  <div id="hud">
+    <div id="quest-count">Quests: 0/5</div>
+    <div id="cycles">Cycles: 0</div>
+  </div>
+  <canvas id="minimap" width="120" height="90"></canvas>
+  <div id="quest-log"></div>
+  <div id="dialogue-box">
+    <div class="speaker"></div>
+    <div class="text"></div>
+    <div class="prompt">▼ SPACE to continue</div>
+  </div>
+  <div id="title-screen">
+    <h1>ICP EXPLORER</h1>
+    <h2>An 8-Bit Adventure Through the Internet Computer</h2>
+    <div class="start-prompt">— Press SPACE or ENTER to start —</div>
+  </div>
+  <div id="completion-screen">
+    <h1>QUEST COMPLETE</h1>
+    <p id="completion-text"></p>
+    <div class="stat" id="completion-stats"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// ICP EXPLORER — 8-Bit Educational Adventure Game
+// ============================================================
+
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const minimapCanvas = document.getElementById('minimap');
+const minimapCtx = minimapCanvas.getContext('2d');
+
+// --- CONSTANTS ---
+const TILE = 32;
+const COLS = 40;
+const ROWS = 30;
+const VIEW_COLS = 25; // visible tiles
+const VIEW_ROWS = 18;
+const PLAYER_SPEED = 2.5;
+
+// Color palette
+const C = {
+  bg: '#0E031F',
+  purple: '#522785',
+  cyan: '#29ABE2',
+  lime: '#DDF730',
+  dark: '#1a0a2e',
+  mid: '#2d1650',
+  light: '#e0e0e0',
+  white: '#ffffff',
+  keyLight: '#3a2060',
+  keyDark: '#251540',
+  keyCap: '#4a3070',
+  keyEdge: '#1a0a2e',
+  grass: '#1a2e0a',
+  path: '#2a1a40',
+  water: '#0a1a3e',
+  npcRed: '#e25555',
+  npcGreen: '#55e280',
+  npcBlue: '#5580e2',
+  npcYellow: '#e2d055',
+  npcPink: '#e255b0',
+};
+
+// --- GAME STATE ---
+const state = {
+  screen: 'title', // title, playing, dialogue, completion
+  player: { x: 20 * TILE, y: 15 * TILE, dir: 'down', frame: 0, animTimer: 0 },
+  camera: { x: 0, y: 0 },
+  keys: {},
+  cycles: 0,
+  questsCompleted: 0,
+  totalQuests: 5,
+  dialogueQueue: [],
+  dialogueIndex: 0,
+  currentNPC: null,
+  quests: {
+    internet_computer: { done: false, name: 'The World Computer', talked: false },
+    caffeine: { done: false, name: 'Chat. Build. Own.', talked: false },
+    self_writing: { done: false, name: 'Self-Writing Cloud', talked: false },
+    cloud_engines: { done: false, name: 'Cloud Engines', talked: false },
+    mission70: { done: false, name: 'Mission 70', talked: false },
+  },
+  particles: [],
+  floatingTexts: [],
+  time: 0,
+};
+
+// --- WORLD MAP ---
+// 0=empty, 1=keyboard tile, 2=path, 3=wall, 4=water, 5=key(special), 6=zone border
+const world = [];
+for (let y = 0; y < ROWS; y++) {
+  world[y] = [];
+  for (let x = 0; x < COLS; x++) {
+    // border walls
+    if (x === 0 || x === COLS-1 || y === 0 || y === ROWS-1) {
+      world[y][x] = 3;
+    }
+    // default keyboard floor
+    else {
+      world[y][x] = 1;
+    }
+  }
+}
+
+// Carve paths between zones
+function carvePath(x1, y1, x2, y2) {
+  let cx = x1, cy = y1;
+  while (cx !== x2) {
+    world[cy][cx] = 2;
+    if (cy > 0) world[cy-1][cx] = 2;
+    cx += cx < x2 ? 1 : -1;
+  }
+  while (cy !== y2) {
+    world[cy][cx] = 2;
+    if (cx > 0) world[cy][cx-1] = 2;
+    cy += cy < y2 ? 1 : -1;
+  }
+}
+
+// Define 5 zones
+const zones = [
+  { id: 'internet_computer', name: 'INTERNET COMPUTER', color: C.cyan, cx: 8, cy: 6, radius: 4 },
+  { id: 'caffeine', name: 'CAFFEINE', color: C.lime, cx: 32, cy: 6, radius: 4 },
+  { id: 'self_writing', name: 'SELF-WRITING CLOUD', color: '#b055e2', cx: 8, cy: 24, radius: 4 },
+  { id: 'cloud_engines', name: 'CLOUD ENGINES', color: '#e28055', cx: 32, cy: 24, radius: 4 },
+  { id: 'mission70', name: 'MISSION 70', color: '#e25555', cx: 20, cy: 15, radius: 5 },
+];
+
+// Create zone areas
+zones.forEach(z => {
+  for (let dy = -z.radius; dy <= z.radius; dy++) {
+    for (let dx = -z.radius; dx <= z.radius; dx++) {
+      const tx = z.cx + dx;
+      const ty = z.cy + dy;
+      if (tx > 0 && tx < COLS-1 && ty > 0 && ty < ROWS-1) {
+        if (Math.abs(dx) === z.radius || Math.abs(dy) === z.radius) {
+          world[ty][tx] = 6; // zone border
+        } else {
+          world[ty][tx] = 5; // special key floor
+        }
+      }
+    }
+  }
+});
+
+// Carve connecting paths
+carvePath(12, 6, 28, 6);   // IC -> Caffeine
+carvePath(8, 10, 8, 20);   // IC -> Self-Writing
+carvePath(32, 10, 32, 20);  // Caffeine -> Cloud Engines
+carvePath(12, 24, 28, 24);  // Self-Writing -> Cloud Engines
+carvePath(12, 6, 20, 15);   // IC -> Mission 70
+carvePath(28, 6, 20, 15);   // Caffeine -> Mission 70
+carvePath(12, 24, 20, 15);  // Self-Writing -> Mission 70
+carvePath(28, 24, 20, 15);  // Cloud Engines -> Mission 70
+
+// Water features
+for (let i = 15; i < 25; i++) { world[2][i] = 4; world[3][i] = 4; }
+for (let i = 15; i < 25; i++) { world[27][i] = 4; world[28][i] = 4; }
+
+// --- NPCs ---
+const npcs = [
+  {
+    id: 'ic_guide',
+    x: 8 * TILE, y: 6 * TILE,
+    color: C.npcBlue,
+    quest: 'internet_computer',
+    name: 'DOMINIC',
+    dialogues: [
+      { speaker: 'DOMINIC', text: "Welcome, explorer. I'm the architect of the Internet Computer — the world's first truly decentralised cloud." },
+      { speaker: 'DOMINIC', text: "The Internet Computer runs on a network of sovereign nodes across independent data centres worldwide. No single entity controls it." },
+      { speaker: 'DOMINIC', text: "Smart contracts here are called 'canisters' — they hold both code AND data, and they run at web speed. No cloud provider needed." },
+      { speaker: 'DOMINIC', text: "The IC processes over 500 million transactions daily, with block finality in under 2 seconds. Try getting that from AWS." },
+      { speaker: 'DOMINIC', text: "The key insight: software should own itself. Applications on the IC are governed by DAOs, not corporations. That's real sovereignty." },
+      { speaker: 'QUEST', text: "QUEST COMPLETE: The World Computer — You've learned what makes the Internet Computer fundamentally different from traditional cloud." },
+    ]
+  },
+  {
+    id: 'caffeine_guide',
+    x: 32 * TILE, y: 6 * TILE,
+    color: C.npcGreen,
+    quest: 'caffeine',
+    name: 'BARISTA',
+    dialogues: [
+      { speaker: 'BARISTA', text: "Hey! Welcome to the Caffeine zone. I build apps here by just... talking to them." },
+      { speaker: 'BARISTA', text: "Caffeine is the world's first self-writing apps platform. Chat. Build. Own. That's the whole idea." },
+      { speaker: 'BARISTA', text: "You describe what you want in plain English, and Caffeine writes the code, deploys the canister, and gives you a live app. In minutes." },
+      { speaker: 'BARISTA', text: "Every app you build, you own. It deploys to the Internet Computer as a canister — no server bills, no vendor lock-in." },
+      { speaker: 'BARISTA', text: "V3 just launched with multi-page apps, a visual composer, and an app marketplace. People are building real products here." },
+      { speaker: 'QUEST', text: "QUEST COMPLETE: Chat. Build. Own. — You've discovered how Caffeine makes the Internet Computer accessible to everyone." },
+    ]
+  },
+  {
+    id: 'sw_guide',
+    x: 8 * TILE, y: 24 * TILE,
+    color: C.npcPink,
+    quest: 'self_writing',
+    name: 'ORACLE',
+    dialogues: [
+      { speaker: 'ORACLE', text: "You've reached the frontier. Self-Writing Cloud is what happens when AI meets decentralised infrastructure." },
+      { speaker: 'ORACLE', text: "Imagine software that writes, tests, deploys, and maintains itself — all on tamperproof infrastructure. That's Self-Writing Cloud." },
+      { speaker: 'ORACLE', text: "AI agents running inside canisters can autonomously create and manage other canisters. Software that creates more software." },
+      { speaker: 'ORACLE', text: "The key difference from traditional AI-generated code: these apps run on sovereign infrastructure. No Big Tech middleman." },
+      { speaker: 'ORACLE', text: "Caffeine is the first proof point. But Self-Writing Cloud is the paradigm — every industry will be reshaped by autonomous software." },
+      { speaker: 'QUEST', text: "QUEST COMPLETE: Self-Writing Cloud — You've glimpsed the future where software builds and governs itself." },
+    ]
+  },
+  {
+    id: 'ce_guide',
+    x: 32 * TILE, y: 24 * TILE,
+    color: C.npcYellow,
+    quest: 'cloud_engines',
+    name: 'ENGINEER',
+    dialogues: [
+      { speaker: 'ENGINEER', text: "Cloud Engines are the beating heart of the Internet Computer. Let me show you how this machine actually works." },
+      { speaker: 'ENGINEER', text: "A Cloud Engine is a standardised compute unit — node machines running the IC protocol in independent data centres." },
+      { speaker: 'ENGINEER', text: "They're grouped into subnets. Each subnet is a mini-blockchain that runs canisters. More subnets = more capacity. It scales horizontally." },
+      { speaker: 'ENGINEER', text: "Node providers earn ICP tokens for running Cloud Engines. It's decentralised infrastructure with real economic incentives." },
+      { speaker: 'ENGINEER', text: "The Swiss subnet, the European sovereign cloud, AI-specific subnets — each is purpose-built. This isn't one-size-fits-all cloud." },
+      { speaker: 'QUEST', text: "QUEST COMPLETE: Cloud Engines — You now understand the physical infrastructure powering the World Computer." },
+    ]
+  },
+  {
+    id: 'm70_guide',
+    x: 20 * TILE, y: 15 * TILE,
+    color: C.npcRed,
+    quest: 'mission70',
+    name: 'ECONOMIST',
+    dialogues: [
+      { speaker: 'ECONOMIST', text: "Mission 70 is the most ambitious tokenomics initiative in crypto. And it's working." },
+      { speaker: 'ECONOMIST', text: "The goal: reduce ICP inflation from 9.72% to roughly 2.92% — a 70% reduction. Hence the name." },
+      { speaker: 'ECONOMIST', text: "It works through cycle burn mechanics. When people use canisters, they burn cycles. More usage = more ICP burned = lower inflation." },
+      { speaker: 'ECONOMIST', text: "As adoption grows, the network becomes deflationary. Not through artificial scarcity, but through genuine utility." },
+      { speaker: 'ECONOMIST', text: "This aligns everyone's incentives: builders create useful apps, users consume cycles, and the token economics improve for all holders." },
+      { speaker: 'QUEST', text: "QUEST COMPLETE: Mission 70 — You understand how utility-driven deflation creates a sustainable token economy." },
+    ]
+  }
+];
+
+// Cycle pickups
+const pickups = [];
+function spawnPickups() {
+  const spots = [
+    [15,6],[18,6],[22,6],[25,6],
+    [8,10],[8,13],[8,17],[8,20],
+    [32,10],[32,13],[32,17],[32,20],
+    [15,24],[18,24],[22,24],[25,24],
+    [14,10],[26,10],[14,20],[26,20],
+    [17,12],[23,12],[17,18],[23,18],
+    [20,10],[20,20],[15,15],[25,15],
+    [3,3],[37,3],[3,27],[37,27],
+  ];
+  spots.forEach(([x,y]) => {
+    pickups.push({ x: x * TILE + 8, y: y * TILE + 8, collected: false, bobOffset: Math.random() * Math.PI * 2 });
+  });
+}
+spawnPickups();
+
+// --- KEYBOARD LABEL MAP (decorative) ---
+const keyLabels = [
+  'ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12',
+  '`','1','2','3','4','5','6','7','8','9','0','-','=','⌫',
+  '⇥','Q','W','E','R','T','Y','U','I','O','P','[',']','\\',
+  '⇪','A','S','D','F','G','H','J','K','L',';',"'",'↵',
+  '⇧','Z','X','C','V','B','N','M',',','.','/','⇧',
+  'fn','⌃','⌥','⌘','','⌘','⌥','←','↑','↓','→'
+];
+
+function getKeyLabel(tx, ty) {
+  const idx = ((ty * 7 + tx * 3) % keyLabels.length);
+  return keyLabels[Math.abs(idx)];
+}
+
+// --- RENDERING ---
+function drawKeyTile(sx, sy, tx, ty, isSpecial, zoneColor) {
+  const inset = 2;
+  const depth = 4;
+
+  // Key base (shadow)
+  ctx.fillStyle = C.keyEdge;
+  ctx.fillRect(sx + inset, sy + inset + depth, TILE - inset*2, TILE - inset*2);
+
+  // Key cap
+  ctx.fillStyle = isSpecial ? zoneColor || C.keyCap : C.keyCap;
+  if (isSpecial) {
+    ctx.globalAlpha = 0.4;
+    ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, TILE - inset*2 - depth);
+    ctx.globalAlpha = 1;
+  } else {
+    ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, TILE - inset*2 - depth);
+  }
+
+  // Key highlight edge
+  ctx.fillStyle = isSpecial ? zoneColor || C.keyLight : C.keyLight;
+  ctx.globalAlpha = isSpecial ? 0.3 : 0.3;
+  ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, 2);
+  ctx.fillRect(sx + inset, sy + inset, 2, TILE - inset*2 - depth);
+  ctx.globalAlpha = 1;
+
+  // Key label
+  const label = getKeyLabel(tx, ty);
+  ctx.fillStyle = isSpecial ? '#ffffff' : '#8a7aa0';
+  ctx.font = '8px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(label, sx + TILE/2, sy + TILE/2 + 1);
+}
+
+function drawPath(sx, sy) {
+  ctx.fillStyle = C.path;
+  ctx.fillRect(sx, sy, TILE, TILE);
+  // subtle grid lines
+  ctx.strokeStyle = '#3a2060';
+  ctx.lineWidth = 0.5;
+  ctx.strokeRect(sx, sy, TILE, TILE);
+}
+
+function drawWall(sx, sy) {
+  ctx.fillStyle = '#1a0830';
+  ctx.fillRect(sx, sy, TILE, TILE);
+  ctx.fillStyle = '#2a1850';
+  ctx.fillRect(sx + 2, sy + 2, TILE - 4, TILE/2 - 2);
+  ctx.fillRect(sx + TILE/4, sy + TILE/2 + 2, TILE/2, TILE/2 - 4);
+}
+
+function drawWater(sx, sy, time) {
+  ctx.fillStyle = C.water;
+  ctx.fillRect(sx, sy, TILE, TILE);
+  // animated waves
+  ctx.fillStyle = '#1a3060';
+  const wave = Math.sin(time * 2 + sx * 0.1) * 3;
+  ctx.fillRect(sx + 4, sy + 10 + wave, TILE - 8, 2);
+  ctx.fillRect(sx + 8, sy + 20 + wave * 0.7, TILE - 16, 2);
+}
+
+function drawZoneBorder(sx, sy, zoneColor) {
+  ctx.fillStyle = C.keyDark;
+  ctx.fillRect(sx, sy, TILE, TILE);
+  ctx.strokeStyle = zoneColor || C.purple;
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.6 + Math.sin(state.time * 3) * 0.2;
+  ctx.strokeRect(sx + 1, sy + 1, TILE - 2, TILE - 2);
+  ctx.globalAlpha = 1;
+}
+
+function getZoneAt(tx, ty) {
+  for (const z of zones) {
+    if (Math.abs(tx - z.cx) <= z.radius && Math.abs(ty - z.cy) <= z.radius) return z;
+  }
+  return null;
+}
+
+function drawPlayer(x, y) {
+  const p = state.player;
+  const bobY = Math.sin(state.time * 8) * (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? 2 : 0);
+
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.beginPath();
+  ctx.ellipse(x + 16, y + 30, 10, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Body
+  ctx.fillStyle = C.cyan;
+  ctx.fillRect(x + 8, y + 12 + bobY, 16, 14);
+
+  // Head
+  ctx.fillStyle = '#f0d0a0';
+  ctx.fillRect(x + 9, y + 2 + bobY, 14, 12);
+
+  // Eyes
+  const eyeOffsetX = p.dir === 'left' ? -2 : p.dir === 'right' ? 2 : 0;
+  const eyeOffsetY = p.dir === 'up' ? -1 : p.dir === 'down' ? 1 : 0;
+  ctx.fillStyle = '#0E031F';
+  ctx.fillRect(x + 11 + eyeOffsetX, y + 6 + bobY + eyeOffsetY, 3, 3);
+  ctx.fillRect(x + 18 + eyeOffsetX, y + 6 + bobY + eyeOffsetY, 3, 3);
+
+  // Hair
+  ctx.fillStyle = '#4a3030';
+  ctx.fillRect(x + 8, y + 1 + bobY, 16, 4);
+
+  // Legs
+  const legAnim = Math.sin(state.time * 10) * 2;
+  ctx.fillStyle = '#2a1a40';
+  ctx.fillRect(x + 10, y + 26 + bobY, 5, 6 + (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? legAnim : 0));
+  ctx.fillRect(x + 17, y + 26 + bobY, 5, 6 - (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? legAnim : 0));
+}
+
+function drawNPC(npc, sx, sy) {
+  const bob = Math.sin(state.time * 2 + npc.x * 0.01) * 2;
+  const q = state.quests[npc.quest];
+
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.beginPath();
+  ctx.ellipse(sx + 16, sy + 30, 10, 4, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Body
+  ctx.fillStyle = npc.color;
+  ctx.fillRect(sx + 8, sy + 12 + bob, 16, 14);
+
+  // Head
+  ctx.fillStyle = '#f0d0a0';
+  ctx.fillRect(sx + 9, sy + 2 + bob, 14, 12);
+
+  // Eyes
+  ctx.fillStyle = '#0E031F';
+  ctx.fillRect(sx + 11, sy + 6 + bob, 3, 3);
+  ctx.fillRect(sx + 18, sy + 6 + bob, 3, 3);
+
+  // Quest indicator
+  if (!q.done) {
+    ctx.fillStyle = C.lime;
+    ctx.font = 'bold 16px monospace';
+    ctx.textAlign = 'center';
+    const excBob = Math.sin(state.time * 4) * 3;
+    ctx.fillText('!', sx + 16, sy - 4 + excBob);
+  } else {
+    ctx.fillStyle = C.cyan;
+    ctx.font = 'bold 14px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('✓', sx + 16, sy - 2);
+  }
+
+  // Name plate
+  ctx.fillStyle = 'rgba(14,3,31,0.8)';
+  const nameWidth = ctx.measureText(npc.name).width + 8;
+  ctx.fillRect(sx + 16 - nameWidth/2, sy - 18, nameWidth, 14);
+  ctx.fillStyle = npc.color;
+  ctx.font = '9px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(npc.name, sx + 16, sy - 8);
+}
+
+function drawPickup(p, sx, sy) {
+  if (p.collected) return;
+  const bob = Math.sin(state.time * 3 + p.bobOffset) * 4;
+  const glow = 0.3 + Math.sin(state.time * 5 + p.bobOffset) * 0.2;
+
+  // Glow
+  ctx.fillStyle = `rgba(221,247,48,${glow})`;
+  ctx.beginPath();
+  ctx.arc(sx + 8, sy + 8 + bob, 10, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Cycle symbol (hexagon-ish)
+  ctx.fillStyle = C.lime;
+  ctx.beginPath();
+  ctx.moveTo(sx + 8, sy + 2 + bob);
+  ctx.lineTo(sx + 14, sy + 5 + bob);
+  ctx.lineTo(sx + 14, sy + 11 + bob);
+  ctx.lineTo(sx + 8, sy + 14 + bob);
+  ctx.lineTo(sx + 2, sy + 11 + bob);
+  ctx.lineTo(sx + 2, sy + 5 + bob);
+  ctx.closePath();
+  ctx.fill();
+
+  // C label
+  ctx.fillStyle = C.dark;
+  ctx.font = 'bold 8px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('C', sx + 8, sy + 10 + bob);
+}
+
+function drawParticles() {
+  state.particles = state.particles.filter(p => p.life > 0);
+  state.particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life -= 0.02;
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.life;
+    ctx.fillRect(p.x - state.camera.x, p.y - state.camera.y, p.size, p.size);
+    ctx.globalAlpha = 1;
+  });
+}
+
+function drawFloatingTexts() {
+  state.floatingTexts = state.floatingTexts.filter(t => t.life > 0);
+  state.floatingTexts.forEach(t => {
+    t.y -= 0.5;
+    t.life -= 0.015;
+    ctx.fillStyle = t.color;
+    ctx.globalAlpha = t.life;
+    ctx.font = 'bold 12px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(t.text, t.x - state.camera.x, t.y - state.camera.y);
+    ctx.globalAlpha = 1;
+  });
+}
+
+function drawZoneLabel() {
+  const ptx = Math.floor((state.player.x + 16) / TILE);
+  const pty = Math.floor((state.player.y + 16) / TILE);
+  const zone = getZoneAt(ptx, pty);
+  if (zone) {
+    ctx.fillStyle = zone.color;
+    ctx.globalAlpha = 0.15;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = zone.color;
+    ctx.font = 'bold 14px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('— ' + zone.name + ' —', canvas.width / 2, 55);
+  }
+}
+
+function drawMinimap() {
+  const mw = minimapCanvas.width;
+  const mh = minimapCanvas.height;
+  const sx = mw / COLS;
+  const sy = mh / ROWS;
+
+  minimapCtx.fillStyle = C.bg;
+  minimapCtx.fillRect(0, 0, mw, mh);
+
+  for (let y = 0; y < ROWS; y++) {
+    for (let x = 0; x < COLS; x++) {
+      const t = world[y][x];
+      let col = null;
+      if (t === 3) col = '#1a0830';
+      else if (t === 4) col = C.water;
+      else if (t === 2) col = C.path;
+      else if (t === 5 || t === 6) {
+        const z = getZoneAt(x, y);
+        col = z ? z.color : C.purple;
+      }
+      if (col) {
+        minimapCtx.fillStyle = col;
+        minimapCtx.globalAlpha = t === 5 || t === 6 ? 0.5 : 0.7;
+        minimapCtx.fillRect(x * sx, y * sy, sx + 0.5, sy + 0.5);
+        minimapCtx.globalAlpha = 1;
+      }
+    }
+  }
+
+  // Player dot
+  const px = (state.player.x / TILE) * sx;
+  const py = (state.player.y / TILE) * sy;
+  minimapCtx.fillStyle = C.cyan;
+  minimapCtx.fillRect(px - 1, py - 1, 3, 3);
+
+  // NPC dots
+  npcs.forEach(npc => {
+    const nx = (npc.x / TILE) * sx;
+    const ny = (npc.y / TILE) * sy;
+    minimapCtx.fillStyle = state.quests[npc.quest].done ? '#555' : npc.color;
+    minimapCtx.fillRect(nx - 1, ny - 1, 2, 2);
+  });
+}
+
+// --- UPDATE ---
+function updateCamera() {
+  const targetX = state.player.x - canvas.width / 2 + 16;
+  const targetY = state.player.y - canvas.height / 2 + 16;
+  state.camera.x += (targetX - state.camera.x) * 0.1;
+  state.camera.y += (targetY - state.camera.y) * 0.1;
+
+  // Clamp
+  state.camera.x = Math.max(0, Math.min(COLS * TILE - canvas.width, state.camera.x));
+  state.camera.y = Math.max(0, Math.min(ROWS * TILE - canvas.height, state.camera.y));
+}
+
+function isWalkable(x, y) {
+  const tx = Math.floor(x / TILE);
+  const ty = Math.floor(y / TILE);
+  if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return false;
+  const t = world[ty][tx];
+  return t !== 3 && t !== 4; // walls and water block
+}
+
+function updatePlayer() {
+  if (state.screen !== 'playing') return;
+  const k = state.keys;
+  let dx = 0, dy = 0;
+
+  if (k.ArrowUp || k.w || k.W) { dy = -PLAYER_SPEED; state.player.dir = 'up'; }
+  if (k.ArrowDown || k.s || k.S) { dy = PLAYER_SPEED; state.player.dir = 'down'; }
+  if (k.ArrowLeft || k.a || k.A) { dx = -PLAYER_SPEED; state.player.dir = 'left'; }
+  if (k.ArrowRight || k.d || k.D) { dx = PLAYER_SPEED; state.player.dir = 'right'; }
+
+  // Normalize diagonal
+  if (dx !== 0 && dy !== 0) {
+    dx *= 0.707;
+    dy *= 0.707;
+  }
+
+  const newX = state.player.x + dx;
+  const newY = state.player.y + dy;
+
+  // Collision check (4 corners of player hitbox)
+  const hx = 10, hy = 14, hw = 12, hh = 16;
+  if (dx !== 0) {
+    if (isWalkable(newX + hx, state.player.y + hy) &&
+        isWalkable(newX + hx + hw, state.player.y + hy) &&
+        isWalkable(newX + hx, state.player.y + hy + hh) &&
+        isWalkable(newX + hx + hw, state.player.y + hy + hh)) {
+      state.player.x = newX;
+    }
+  }
+  if (dy !== 0) {
+    if (isWalkable(state.player.x + hx, newY + hy) &&
+        isWalkable(state.player.x + hx + hw, newY + hy) &&
+        isWalkable(state.player.x + hx, newY + hy + hh) &&
+        isWalkable(state.player.x + hx + hw, newY + hy + hh)) {
+      state.player.y = newY;
+    }
+  }
+
+  // Pickup collection
+  pickups.forEach(p => {
+    if (p.collected) return;
+    const dist = Math.hypot((state.player.x + 16) - p.x, (state.player.y + 16) - p.y);
+    if (dist < 24) {
+      p.collected = true;
+      state.cycles += 10;
+      // Particles
+      for (let i = 0; i < 8; i++) {
+        state.particles.push({
+          x: p.x, y: p.y,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+          life: 1, size: 3, color: C.lime,
+        });
+      }
+      state.floatingTexts.push({
+        x: p.x, y: p.y, text: '+10 CYCLES', color: C.lime, life: 1
+      });
+      document.getElementById('cycles').textContent = `Cycles: ${state.cycles}`;
+    }
+  });
+
+  // NPC interaction proximity
+  npcs.forEach(npc => {
+    const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
+    if (dist < 40 && !state.quests[npc.quest].talked && state.screen === 'playing') {
+      // Show interact hint handled in render
+    }
+  });
+}
+
+function checkNPCInteraction() {
+  for (const npc of npcs) {
+    const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
+    if (dist < 44) {
+      state.currentNPC = npc;
+      state.dialogueQueue = npc.dialogues;
+      state.dialogueIndex = 0;
+      state.screen = 'dialogue';
+      showDialogue();
+      return true;
+    }
+  }
+  return false;
+}
+
+function showDialogue() {
+  const box = document.getElementById('dialogue-box');
+  const d = state.dialogueQueue[state.dialogueIndex];
+  if (!d) {
+    closeDialogue();
+    return;
+  }
+
+  box.style.display = 'block';
+  box.querySelector('.speaker').textContent = d.speaker === 'QUEST' ? '★ QUEST' : d.speaker;
+  box.querySelector('.text').textContent = d.text;
+  box.querySelector('.prompt').textContent = state.dialogueIndex < state.dialogueQueue.length - 1
+    ? '▼ SPACE to continue'
+    : '▼ SPACE to close';
+}
+
+function advanceDialogue() {
+  state.dialogueIndex++;
+  if (state.dialogueIndex >= state.dialogueQueue.length) {
+    // Complete quest if not done
+    if (state.currentNPC && !state.quests[state.currentNPC.quest].done) {
+      state.quests[state.currentNPC.quest].done = true;
+      state.quests[state.currentNPC.quest].talked = true;
+      state.questsCompleted++;
+      state.cycles += 50;
+      document.getElementById('quest-count').textContent = `Quests: ${state.questsCompleted}/${state.totalQuests}`;
+      document.getElementById('cycles').textContent = `Cycles: ${state.cycles}`;
+
+      // Big particle burst
+      for (let i = 0; i < 20; i++) {
+        state.particles.push({
+          x: state.currentNPC.x + 16,
+          y: state.currentNPC.y + 16,
+          vx: (Math.random() - 0.5) * 5,
+          vy: (Math.random() - 0.5) * 5,
+          life: 1, size: 4,
+          color: [C.cyan, C.lime, C.purple][Math.floor(Math.random() * 3)],
+        });
+      }
+
+      if (state.questsCompleted >= state.totalQuests) {
+        setTimeout(showCompletion, 500);
+      }
+    } else if (state.currentNPC) {
+      state.quests[state.currentNPC.quest].talked = true;
+    }
+    closeDialogue();
+    return;
+  }
+  showDialogue();
+}
+
+function closeDialogue() {
+  document.getElementById('dialogue-box').style.display = 'none';
+  state.screen = 'playing';
+  state.currentNPC = null;
+}
+
+function showCompletion() {
+  state.screen = 'completion';
+  const screen = document.getElementById('completion-screen');
+  screen.style.display = 'flex';
+  document.getElementById('completion-text').textContent =
+    "You've explored the entire Internet Computer ecosystem — from sovereign cloud infrastructure to self-writing applications, " +
+    "from the physical Cloud Engines to the tokenomics of Mission 70. The future of computing isn't owned by corporations. It's owned by its users.";
+  document.getElementById('completion-stats').textContent =
+    `Quests completed: ${state.questsCompleted}/${state.totalQuests} | Cycles collected: ${state.cycles} | Explorer rating: ★★★★★`;
+}
+
+function updateQuestLog() {
+  const log = document.getElementById('quest-log');
+  const anyActive = Object.values(state.quests).some(q => !q.done);
+  if (state.keys.Tab || state.keys.q || state.keys.Q) {
+    log.style.display = 'block';
+    let html = '<h3>QUEST LOG</h3>';
+    for (const [id, q] of Object.entries(state.quests)) {
+      html += `<div class="quest ${q.done ? 'done' : ''}">${q.done ? '✓' : '○'} ${q.name}</div>`;
+    }
+    log.innerHTML = html;
+  } else {
+    log.style.display = 'none';
+  }
+}
+
+// --- MAIN RENDER ---
+function render() {
+  ctx.fillStyle = C.bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const startCol = Math.max(0, Math.floor(state.camera.x / TILE));
+  const startRow = Math.max(0, Math.floor(state.camera.y / TILE));
+  const endCol = Math.min(COLS, startCol + VIEW_COLS + 2);
+  const endRow = Math.min(ROWS, startRow + VIEW_ROWS + 2);
+
+  // Draw tiles
+  for (let y = startRow; y < endRow; y++) {
+    for (let x = startCol; x < endCol; x++) {
+      const sx = x * TILE - state.camera.x;
+      const sy = y * TILE - state.camera.y;
+      const t = world[y][x];
+      const zone = getZoneAt(x, y);
+
+      switch(t) {
+        case 1: drawKeyTile(sx, sy, x, y, false); break;
+        case 2: drawPath(sx, sy); break;
+        case 3: drawWall(sx, sy); break;
+        case 4: drawWater(sx, sy, state.time); break;
+        case 5: drawKeyTile(sx, sy, x, y, true, zone?.color); break;
+        case 6: drawZoneBorder(sx, sy, zone?.color); break;
+      }
+    }
+  }
+
+  // Draw pickups
+  pickups.forEach(p => {
+    if (p.collected) return;
+    const sx = p.x - state.camera.x;
+    const sy = p.y - state.camera.y;
+    if (sx > -20 && sx < canvas.width + 20 && sy > -20 && sy < canvas.height + 20) {
+      drawPickup(p, sx, sy);
+    }
+  });
+
+  // Draw NPCs
+  npcs.forEach(npc => {
+    const sx = npc.x - state.camera.x;
+    const sy = npc.y - state.camera.y;
+    if (sx > -40 && sx < canvas.width + 40 && sy > -40 && sy < canvas.height + 40) {
+      drawNPC(npc, sx, sy);
+    }
+  });
+
+  // Draw player
+  drawPlayer(state.player.x - state.camera.x, state.player.y - state.camera.y);
+
+  // Draw interaction hints
+  if (state.screen === 'playing') {
+    npcs.forEach(npc => {
+      const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
+      if (dist < 50) {
+        const sx = npc.x - state.camera.x;
+        const sy = npc.y - state.camera.y;
+        ctx.fillStyle = 'rgba(14,3,31,0.85)';
+        ctx.fillRect(sx - 10, sy + 34, 52, 16);
+        ctx.fillStyle = C.lime;
+        ctx.font = '10px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('[SPACE]', sx + 16, sy + 46);
+      }
+    });
+  }
+
+  // Particles & floating text
+  drawParticles();
+  drawFloatingTexts();
+
+  // Zone overlay
+  drawZoneLabel();
+
+  // Controls hint
+  if (state.questsCompleted === 0 && state.screen === 'playing') {
+    ctx.fillStyle = 'rgba(14,3,31,0.7)';
+    ctx.fillRect(canvas.width/2 - 140, canvas.height - 35, 280, 25);
+    ctx.fillStyle = '#8a7aa0';
+    ctx.font = '11px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Arrow keys / WASD to move  |  TAB for quest log', canvas.width/2, canvas.height - 19);
+  }
+
+  // Minimap
+  drawMinimap();
+}
+
+// --- GAME LOOP ---
+function gameLoop(timestamp) {
+  state.time = timestamp / 1000;
+
+  if (state.screen === 'playing') {
+    updatePlayer();
+    updateCamera();
+    updateQuestLog();
+  }
+
+  if (state.screen !== 'title') {
+    render();
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+// --- INPUT ---
+document.addEventListener('keydown', (e) => {
+  state.keys[e.key] = true;
+
+  if (state.screen === 'title' && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+    state.screen = 'playing';
+    document.getElementById('title-screen').style.display = 'none';
+    // Position player at center of map
+    state.player.x = 20 * TILE;
+    state.player.y = 12 * TILE;
+    state.camera.x = state.player.x - canvas.width / 2;
+    state.camera.y = state.player.y - canvas.height / 2;
+    return;
+  }
+
+  if (state.screen === 'dialogue' && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+    advanceDialogue();
+    return;
+  }
+
+  if (state.screen === 'playing' && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+    checkNPCInteraction();
+  }
+
+  if (state.screen === 'completion' && (e.key === ' ' || e.key === 'Enter')) {
+    e.preventDefault();
+    state.screen = 'playing';
+    document.getElementById('completion-screen').style.display = 'none';
+  }
+
+  // Prevent scrolling
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Tab'].includes(e.key)) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  state.keys[e.key] = false;
+});
+
+// --- START ---
+requestAnimationFrame(gameLoop);
+</script>
+</body>
+</html>
