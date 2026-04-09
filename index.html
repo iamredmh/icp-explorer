@@ -15,157 +15,69 @@
     font-family: monospace;
     overflow: hidden;
   }
-  #game-wrapper {
-    position: relative;
-    image-rendering: pixelated;
-  }
-  canvas {
-    display: block;
-    image-rendering: pixelated;
-    border: 3px solid #522785;
-    border-radius: 4px;
-  }
+  #game-wrapper { position: relative; image-rendering: pixelated; }
+  canvas { display: block; image-rendering: pixelated; border: 3px solid #522785; border-radius: 4px; }
   #hud {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    pointer-events: none;
-    z-index: 10;
+    position: absolute; top: 8px; left: 8px; right: 8px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    pointer-events: none; z-index: 10;
   }
-  #quest-count {
-    background: rgba(14,3,31,0.85);
-    color: #29ABE2;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    border: 1px solid #522785;
-  }
-  #cycles {
-    background: rgba(14,3,31,0.85);
-    color: #DDF730;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    border: 1px solid #522785;
-  }
+  .hud-item { background: rgba(14,3,31,0.85); padding: 6px 12px; border-radius: 4px; font-size: 14px; border: 1px solid #522785; }
+  #quest-count { color: #29ABE2; }
+  #cycles { color: #DDF730; }
+  #fragments-hud { color: #b055e2; }
   #dialogue-box {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    background: rgba(14,3,31,0.95);
-    border: 2px solid #29ABE2;
-    border-radius: 6px;
-    padding: 16px 20px;
-    color: #fff;
-    font-size: 15px;
-    line-height: 1.5;
-    display: none;
-    z-index: 20;
-    pointer-events: auto;
+    position: absolute; bottom: 12px; left: 12px; right: 12px;
+    background: rgba(14,3,31,0.95); border: 2px solid #29ABE2; border-radius: 6px;
+    padding: 16px 20px; color: #fff; font-size: 15px; line-height: 1.5;
+    display: none; z-index: 20;
   }
-  #dialogue-box .speaker {
-    color: #DDF730;
-    font-weight: bold;
-    margin-bottom: 4px;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  #dialogue-box .speaker { color: #DDF730; font-weight: bold; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
   #dialogue-box .text { color: #e0e0e0; }
-  #dialogue-box .prompt {
-    color: #29ABE2;
-    font-size: 12px;
-    margin-top: 8px;
-    animation: blink 1s infinite;
-  }
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  #dialogue-box .prompt { color: #29ABE2; font-size: 12px; margin-top: 8px; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   #quest-log {
-    position: absolute;
-    top: 40px;
-    right: 8px;
-    background: rgba(14,3,31,0.9);
-    border: 1px solid #522785;
-    border-radius: 6px;
-    padding: 12px 16px;
-    color: #e0e0e0;
-    font-size: 12px;
-    line-height: 1.6;
-    max-width: 280px;
-    display: none;
-    z-index: 15;
-    pointer-events: none;
+    position: absolute; top: 40px; right: 8px; background: rgba(14,3,31,0.9);
+    border: 1px solid #522785; border-radius: 6px; padding: 12px 16px;
+    color: #e0e0e0; font-size: 12px; line-height: 1.6; max-width: 300px;
+    display: none; z-index: 15; pointer-events: none;
   }
   #quest-log h3 { color: #DDF730; margin-bottom: 6px; font-size: 13px; }
+  #quest-log .section { color: #29ABE2; margin-top: 8px; margin-bottom: 4px; font-size: 11px; }
   #quest-log .quest { margin-bottom: 4px; }
   #quest-log .quest.done { color: #29ABE2; text-decoration: line-through; opacity: 0.6; }
   #title-screen {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #0E031F;
-    z-index: 100;
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; background: #0E031F; z-index: 100;
   }
-  #title-screen h1 {
-    font-size: 36px;
-    color: #29ABE2;
-    text-shadow: 3px 3px 0 #522785;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-  }
-  #title-screen h2 {
-    font-size: 16px;
-    color: #DDF730;
-    margin-bottom: 40px;
-    font-weight: normal;
-  }
-  #title-screen .start-prompt {
-    color: #fff;
-    font-size: 18px;
-    animation: blink 1.2s infinite;
-  }
+  #title-screen h1 { font-size: 36px; color: #29ABE2; text-shadow: 3px 3px 0 #522785; margin-bottom: 8px; letter-spacing: 2px; }
+  #title-screen h2 { font-size: 16px; color: #DDF730; margin-bottom: 40px; font-weight: normal; }
+  #title-screen .start-prompt { color: #fff; font-size: 18px; animation: blink 1.2s infinite; }
   #minimap {
-    position: absolute;
-    top: 40px;
-    left: 8px;
-    background: rgba(14,3,31,0.9);
-    border: 1px solid #522785;
-    border-radius: 4px;
-    padding: 4px;
-    z-index: 15;
-    pointer-events: none;
+    position: absolute; top: 40px; left: 8px; background: rgba(14,3,31,0.9);
+    border: 1px solid #522785; border-radius: 4px; padding: 4px; z-index: 15; pointer-events: none;
   }
   #completion-screen {
-    position: absolute;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(14,3,31,0.97);
-    z-index: 100;
-    text-align: center;
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    justify-content: center; align-items: center; background: rgba(14,3,31,0.97);
+    z-index: 100; text-align: center;
   }
   #completion-screen h1 { font-size: 28px; color: #DDF730; margin-bottom: 12px; }
   #completion-screen p { color: #e0e0e0; font-size: 15px; line-height: 1.6; max-width: 500px; margin-bottom: 8px; }
   #completion-screen .stat { color: #29ABE2; font-size: 14px; margin-bottom: 4px; }
+  #minigame-overlay { position: absolute; inset: 0; display: none; z-index: 50; }
 </style>
 </head>
 <body>
 <div id="game-wrapper">
   <canvas id="game" width="800" height="600"></canvas>
+  <canvas id="minigame-overlay" width="800" height="600"></canvas>
   <div id="hud">
-    <div id="quest-count">Quests: 0/5</div>
-    <div id="cycles">Cycles: 0</div>
+    <div class="hud-item" id="quest-count">Quests: 0/9</div>
+    <div class="hud-item" id="fragments-hud" style="display:none">Fragments: 0/4</div>
+    <div class="hud-item" id="cycles">Cycles: 0</div>
   </div>
-  <canvas id="minimap" width="120" height="90"></canvas>
+  <canvas id="minimap" width="160" height="160"></canvas>
   <div id="quest-log"></div>
   <div id="dialogue-box">
     <div class="speaker"></div>
@@ -186,873 +98,848 @@
 
 <script>
 // ============================================================
-// ICP EXPLORER — 8-Bit Educational Adventure Game
+// ICP EXPLORER — 8-Bit Educational Adventure
+// Expanded map: central hub + 4 side rooms (N/E/S/W)
 // ============================================================
-
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
+const mgCanvas = document.getElementById('minigame-overlay');
+const mgCtx = mgCanvas.getContext('2d');
 const minimapCanvas = document.getElementById('minimap');
 const minimapCtx = minimapCanvas.getContext('2d');
 
-// --- CONSTANTS ---
 const TILE = 32;
-const COLS = 40;
-const ROWS = 30;
-const VIEW_COLS = 25; // visible tiles
+// Map is now 60 wide x 60 tall to accommodate side rooms
+const COLS = 80;
+const ROWS = 64;
+const VIEW_COLS = 25;
 const VIEW_ROWS = 18;
 const PLAYER_SPEED = 2.5;
 
-// Color palette
 const C = {
-  bg: '#0E031F',
-  purple: '#522785',
-  cyan: '#29ABE2',
-  lime: '#DDF730',
-  dark: '#1a0a2e',
-  mid: '#2d1650',
-  light: '#e0e0e0',
-  white: '#ffffff',
-  keyLight: '#3a2060',
-  keyDark: '#251540',
-  keyCap: '#4a3070',
-  keyEdge: '#1a0a2e',
-  grass: '#1a2e0a',
-  path: '#2a1a40',
-  water: '#0a1a3e',
-  npcRed: '#e25555',
-  npcGreen: '#55e280',
-  npcBlue: '#5580e2',
-  npcYellow: '#e2d055',
-  npcPink: '#e255b0',
+  bg:'#0E031F', purple:'#522785', cyan:'#29ABE2', lime:'#DDF730',
+  dark:'#1a0a2e', keyCap:'#4a3070', keyEdge:'#1a0a2e', keyLight:'#3a2060',
+  path:'#2a1a40', water:'#0a1a3e',
+  npcRed:'#e25555', npcGreen:'#55e280', npcBlue:'#5580e2', npcYellow:'#e2d055', npcPink:'#e255b0',
+  red:'#e25555', orange:'#e28055',
+  // Room-specific
+  vaultFloor:'#0a2a3a', vaultWall:'#0a1520', vaultAccent:'#1a5a7a',
+  ddosFloor:'#1a0a2e', ddosAccent:'#29ABE2',
+  burnFloor:'#2e1a0a', burnAccent:'#e28055',
+  assemblyFloor:'#1a0a2e', assemblyAccent:'#b055e2',
 };
 
-// --- GAME STATE ---
+// ============================================================
+// STATE
+// ============================================================
 const state = {
-  screen: 'title', // title, playing, dialogue, completion
-  player: { x: 20 * TILE, y: 15 * TILE, dir: 'down', frame: 0, animTimer: 0 },
+  screen: 'title',
+  player: { x: 30*TILE, y: 30*TILE, dir: 'down' },
   camera: { x: 0, y: 0 },
   keys: {},
   cycles: 0,
   questsCompleted: 0,
-  totalQuests: 5,
-  dialogueQueue: [],
-  dialogueIndex: 0,
-  currentNPC: null,
+  totalQuests: 9,
+  dialogueQueue: [], dialogueIndex: 0, currentNPC: null,
+  _afterDialogue: null,
   quests: {
-    internet_computer: { done: false, name: 'The World Computer', talked: false },
-    caffeine: { done: false, name: 'Chat. Build. Own.', talked: false },
-    self_writing: { done: false, name: 'Self-Writing Cloud', talked: false },
-    cloud_engines: { done: false, name: 'Cloud Engines', talked: false },
-    mission70: { done: false, name: 'Mission 70', talked: false },
+    internet_computer: { done:false, name:'The World Computer' },
+    caffeine: { done:false, name:'Chat. Build. Own.' },
+    self_writing: { done:false, name:'Self-Writing Cloud' },
+    cloud_engines: { done:false, name:'Cloud Engines' },
+    mission70: { done:false, name:'Mission 70' },
+    canister_assembly: { done:false, name:'Canister Assembly' },
+    swiss_vault: { done:false, name:'Swiss Vault' },
+    cycle_burn: { done:false, name:'Cycle Burn Challenge' },
+    ddos_defense: { done:false, name:'DDoS Defense' },
   },
-  particles: [],
-  floatingTexts: [],
-  time: 0,
+  particles: [], floatingTexts: [], time: 0,
+  // Canister Assembly
+  fragments: { collected:0, pieces:[false,false,false,false] },
+  assemblyOrder: [], assemblyCursor: 0,
+  // DDoS
+  ddosPackets:[], ddosScore:0, ddosMissed:0, ddosBlocked:0, ddosTimer:0, ddosDuration:20, ddosSpawnTimer:0, ddosLaneCooldown:[0,0,0,0],
+  // Burn
+  burnCanisters:[], burnBudget:0, burnAllocated:[], burnCursor:0,
+  // Vault
+  vaultPlayer:{x:0,y:0}, vaultReached:false,
 };
 
-// --- WORLD MAP ---
-// 0=empty, 1=keyboard tile, 2=path, 3=wall, 4=water, 5=key(special), 6=zone border
+// ============================================================
+// WORLD MAP GENERATION
+// ============================================================
 const world = [];
 for (let y = 0; y < ROWS; y++) {
   world[y] = [];
-  for (let x = 0; x < COLS; x++) {
-    // border walls
-    if (x === 0 || x === COLS-1 || y === 0 || y === ROWS-1) {
-      world[y][x] = 3;
-    }
-    // default keyboard floor
-    else {
-      world[y][x] = 1;
-    }
+  for (let x = 0; x < COLS; x++) world[y][x] = 0; // void by default
+}
+
+// --- CENTRAL HUB: 40x30 block at center ---
+const HUB = { x: 20, y: 17, w: 40, h: 30 };
+for (let y = HUB.y; y < HUB.y+HUB.h; y++) {
+  for (let x = HUB.x; x < HUB.x+HUB.w; x++) {
+    if (x === HUB.x || x === HUB.x+HUB.w-1 || y === HUB.y || y === HUB.y+HUB.h-1) world[y][x] = 3; // wall
+    else world[y][x] = 1; // keyboard floor
   }
 }
 
-// Carve paths between zones
-function carvePath(x1, y1, x2, y2) {
-  let cx = x1, cy = y1;
-  while (cx !== x2) {
-    world[cy][cx] = 2;
-    if (cy > 0) world[cy-1][cx] = 2;
-    cx += cx < x2 ? 1 : -1;
-  }
-  while (cy !== y2) {
-    world[cy][cx] = 2;
-    if (cx > 0) world[cy][cx-1] = 2;
-    cy += cy < y2 ? 1 : -1;
-  }
-}
-
-// Define 5 zones
+// --- ZONES inside hub ---
 const zones = [
-  { id: 'internet_computer', name: 'INTERNET COMPUTER', color: C.cyan, cx: 8, cy: 6, radius: 4 },
-  { id: 'caffeine', name: 'CAFFEINE', color: C.lime, cx: 32, cy: 6, radius: 4 },
-  { id: 'self_writing', name: 'SELF-WRITING CLOUD', color: '#b055e2', cx: 8, cy: 24, radius: 4 },
-  { id: 'cloud_engines', name: 'CLOUD ENGINES', color: '#e28055', cx: 32, cy: 24, radius: 4 },
-  { id: 'mission70', name: 'MISSION 70', color: '#e25555', cx: 20, cy: 15, radius: 5 },
+  { id:'internet_computer', name:'INTERNET COMPUTER', color:C.cyan, cx:HUB.x+8, cy:HUB.y+6, radius:4 },
+  { id:'caffeine', name:'CAFFEINE', color:C.lime, cx:HUB.x+32, cy:HUB.y+6, radius:4 },
+  { id:'self_writing', name:'SELF-WRITING CLOUD', color:'#b055e2', cx:HUB.x+8, cy:HUB.y+24, radius:4 },
+  { id:'cloud_engines', name:'CLOUD ENGINES', color:'#e28055', cx:HUB.x+32, cy:HUB.y+24, radius:4 },
+  { id:'mission70', name:'MISSION 70', color:'#e25555', cx:HUB.x+20, cy:HUB.y+15, radius:5 },
 ];
 
-// Create zone areas
 zones.forEach(z => {
   for (let dy = -z.radius; dy <= z.radius; dy++) {
     for (let dx = -z.radius; dx <= z.radius; dx++) {
-      const tx = z.cx + dx;
-      const ty = z.cy + dy;
-      if (tx > 0 && tx < COLS-1 && ty > 0 && ty < ROWS-1) {
-        if (Math.abs(dx) === z.radius || Math.abs(dy) === z.radius) {
-          world[ty][tx] = 6; // zone border
-        } else {
-          world[ty][tx] = 5; // special key floor
-        }
-      }
+      const tx = z.cx+dx, ty = z.cy+dy;
+      if (tx > HUB.x && tx < HUB.x+HUB.w-1 && ty > HUB.y && ty < HUB.y+HUB.h-1)
+        world[ty][tx] = (Math.abs(dx)===z.radius||Math.abs(dy)===z.radius) ? 6 : 5;
     }
   }
 });
 
-// Carve connecting paths
-carvePath(12, 6, 28, 6);   // IC -> Caffeine
-carvePath(8, 10, 8, 20);   // IC -> Self-Writing
-carvePath(32, 10, 32, 20);  // Caffeine -> Cloud Engines
-carvePath(12, 24, 28, 24);  // Self-Writing -> Cloud Engines
-carvePath(12, 6, 20, 15);   // IC -> Mission 70
-carvePath(28, 6, 20, 15);   // Caffeine -> Mission 70
-carvePath(12, 24, 20, 15);  // Self-Writing -> Mission 70
-carvePath(28, 24, 20, 15);  // Cloud Engines -> Mission 70
+function carvePath(x1,y1,x2,y2) {
+  let cx=x1,cy=y1;
+  while(cx!==x2){world[cy][cx]=2;if(cy>0&&world[cy-1][cx]===1)world[cy-1][cx]=2;cx+=cx<x2?1:-1;}
+  while(cy!==y2){world[cy][cx]=2;if(cx>0&&world[cy][cx-1]===1)world[cy][cx-1]=2;cy+=cy<y2?1:-1;}
+}
 
-// Water features
-for (let i = 15; i < 25; i++) { world[2][i] = 4; world[3][i] = 4; }
-for (let i = 15; i < 25; i++) { world[27][i] = 4; world[28][i] = 4; }
+// Hub internal paths
+const zc = zones.map(z=>({x:z.cx,y:z.cy}));
+carvePath(zc[0].x+4,zc[0].y,zc[1].x-4,zc[1].y); // IC -> Caffeine
+carvePath(zc[0].x,zc[0].y+4,zc[0].x,zc[2].y-4);   // IC -> Self-Writing
+carvePath(zc[1].x,zc[1].y+4,zc[1].x,zc[3].y-4);   // Caffeine -> Cloud Engines
+carvePath(zc[2].x+4,zc[2].y,zc[3].x-4,zc[3].y);   // Self-Writing -> Cloud Engines
+carvePath(zc[0].x+4,zc[0].y,zc[4].x,zc[4].y);     // IC -> Mission 70
+carvePath(zc[1].x-4,zc[1].y,zc[4].x,zc[4].y);     // Caffeine -> Mission 70
 
-// --- NPCs ---
-const npcs = [
-  {
-    id: 'ic_guide',
-    x: 8 * TILE, y: 6 * TILE,
-    color: C.npcBlue,
-    quest: 'internet_computer',
-    name: 'DOMINIC',
-    dialogues: [
-      { speaker: 'DOMINIC', text: "Welcome, explorer. I'm the architect of the Internet Computer — the world's first truly decentralised cloud." },
-      { speaker: 'DOMINIC', text: "The Internet Computer runs on a network of sovereign nodes across independent data centres worldwide. No single entity controls it." },
-      { speaker: 'DOMINIC', text: "Smart contracts here are called 'canisters' — they hold both code AND data, and they run at web speed. No cloud provider needed." },
-      { speaker: 'DOMINIC', text: "The IC processes over 500 million transactions daily, with block finality in under 2 seconds. Try getting that from AWS." },
-      { speaker: 'DOMINIC', text: "The key insight: software should own itself. Applications on the IC are governed by DAOs, not corporations. That's real sovereignty." },
-      { speaker: 'QUEST', text: "QUEST COMPLETE: The World Computer — You've learned what makes the Internet Computer fundamentally different from traditional cloud." },
-    ]
-  },
-  {
-    id: 'caffeine_guide',
-    x: 32 * TILE, y: 6 * TILE,
-    color: C.npcGreen,
-    quest: 'caffeine',
-    name: 'BARISTA',
-    dialogues: [
-      { speaker: 'BARISTA', text: "Hey! Welcome to the Caffeine zone. I build apps here by just... talking to them." },
-      { speaker: 'BARISTA', text: "Caffeine is the world's first self-writing apps platform. Chat. Build. Own. That's the whole idea." },
-      { speaker: 'BARISTA', text: "You describe what you want in plain English, and Caffeine writes the code, deploys the canister, and gives you a live app. In minutes." },
-      { speaker: 'BARISTA', text: "Every app you build, you own. It deploys to the Internet Computer as a canister — no server bills, no vendor lock-in." },
-      { speaker: 'BARISTA', text: "V3 just launched with multi-page apps, a visual composer, and an app marketplace. People are building real products here." },
-      { speaker: 'QUEST', text: "QUEST COMPLETE: Chat. Build. Own. — You've discovered how Caffeine makes the Internet Computer accessible to everyone." },
-    ]
-  },
-  {
-    id: 'sw_guide',
-    x: 8 * TILE, y: 24 * TILE,
-    color: C.npcPink,
-    quest: 'self_writing',
-    name: 'ORACLE',
-    dialogues: [
-      { speaker: 'ORACLE', text: "You've reached the frontier. Self-Writing Cloud is what happens when AI meets decentralised infrastructure." },
-      { speaker: 'ORACLE', text: "Imagine software that writes, tests, deploys, and maintains itself — all on tamperproof infrastructure. That's Self-Writing Cloud." },
-      { speaker: 'ORACLE', text: "AI agents running inside canisters can autonomously create and manage other canisters. Software that creates more software." },
-      { speaker: 'ORACLE', text: "The key difference from traditional AI-generated code: these apps run on sovereign infrastructure. No Big Tech middleman." },
-      { speaker: 'ORACLE', text: "Caffeine is the first proof point. But Self-Writing Cloud is the paradigm — every industry will be reshaped by autonomous software." },
-      { speaker: 'QUEST', text: "QUEST COMPLETE: Self-Writing Cloud — You've glimpsed the future where software builds and governs itself." },
-    ]
-  },
-  {
-    id: 'ce_guide',
-    x: 32 * TILE, y: 24 * TILE,
-    color: C.npcYellow,
-    quest: 'cloud_engines',
-    name: 'ENGINEER',
-    dialogues: [
-      { speaker: 'ENGINEER', text: "Cloud Engines are the beating heart of the Internet Computer. Let me show you how this machine actually works." },
-      { speaker: 'ENGINEER', text: "A Cloud Engine is a standardised compute unit — node machines running the IC protocol in independent data centres." },
-      { speaker: 'ENGINEER', text: "They're grouped into subnets. Each subnet is a mini-blockchain that runs canisters. More subnets = more capacity. It scales horizontally." },
-      { speaker: 'ENGINEER', text: "Node providers earn ICP tokens for running Cloud Engines. It's decentralised infrastructure with real economic incentives." },
-      { speaker: 'ENGINEER', text: "The Swiss subnet, the European sovereign cloud, AI-specific subnets — each is purpose-built. This isn't one-size-fits-all cloud." },
-      { speaker: 'QUEST', text: "QUEST COMPLETE: Cloud Engines — You now understand the physical infrastructure powering the World Computer." },
-    ]
-  },
-  {
-    id: 'm70_guide',
-    x: 20 * TILE, y: 15 * TILE,
-    color: C.npcRed,
-    quest: 'mission70',
-    name: 'ECONOMIST',
-    dialogues: [
-      { speaker: 'ECONOMIST', text: "Mission 70 is the most ambitious tokenomics initiative in crypto. And it's working." },
-      { speaker: 'ECONOMIST', text: "The goal: reduce ICP inflation from 9.72% to roughly 2.92% — a 70% reduction. Hence the name." },
-      { speaker: 'ECONOMIST', text: "It works through cycle burn mechanics. When people use canisters, they burn cycles. More usage = more ICP burned = lower inflation." },
-      { speaker: 'ECONOMIST', text: "As adoption grows, the network becomes deflationary. Not through artificial scarcity, but through genuine utility." },
-      { speaker: 'ECONOMIST', text: "This aligns everyone's incentives: builders create useful apps, users consume cycles, and the token economics improve for all holders." },
-      { speaker: 'QUEST', text: "QUEST COMPLETE: Mission 70 — You understand how utility-driven deflation creates a sustainable token economy." },
-    ]
+// Water features in hub
+for(let i=HUB.x+15;i<HUB.x+25;i++){world[HUB.y+2][i]=4;world[HUB.y+3][i]=4;}
+for(let i=HUB.x+15;i<HUB.x+25;i++){world[HUB.y+HUB.h-3][i]=4;world[HUB.y+HUB.h-4][i]=4;}
+
+// --- SIDE ROOMS ---
+// Each room is 16x12, connected via a corridor
+
+// WEST ROOM (Canister Assembly) — left of hub
+const WEST = { x: HUB.x-18, y: HUB.y+9, w: 16, h: 12 };
+for(let y=WEST.y;y<WEST.y+WEST.h;y++){
+  for(let x=WEST.x;x<WEST.x+WEST.w;x++){
+    if(x===WEST.x||x===WEST.x+WEST.w-1||y===WEST.y||y===WEST.y+WEST.h-1)world[y][x]=3;
+    else world[y][x]=8; // assembly floor (tile type 8)
   }
+}
+// Corridor west — open both the room's east wall AND the hub's west wall
+for(let x=WEST.x+WEST.w-1;x<=HUB.x;x++){world[WEST.y+5][x]=2;world[WEST.y+6][x]=2;}
+// Punch through room's east wall
+world[WEST.y+5][WEST.x+WEST.w-1]=8;world[WEST.y+6][WEST.x+WEST.w-1]=8;
+// Punch through hub's west wall
+world[WEST.y+5][HUB.x]=2;world[WEST.y+6][HUB.x]=2;
+
+// EAST ROOM (DDoS Defense) — right of hub
+const EAST = { x: HUB.x+HUB.w+2, y: HUB.y+9, w: 16, h: 12 };
+for(let y=EAST.y;y<EAST.y+EAST.h;y++){
+  for(let x=EAST.x;x<EAST.x+EAST.w;x++){
+    if(x===EAST.x||x===EAST.x+EAST.w-1||y===EAST.y||y===EAST.y+EAST.h-1)world[y][x]=3;
+    else world[y][x]=9; // ddos floor (tile type 9)
+  }
+}
+// Corridor east — open both hub's east wall AND the room's west wall
+for(let x=HUB.x+HUB.w-1;x<=EAST.x;x++){world[EAST.y+5][x]=2;world[EAST.y+6][x]=2;}
+// Punch through hub's east wall
+world[EAST.y+5][HUB.x+HUB.w-1]=2;world[EAST.y+6][HUB.x+HUB.w-1]=2;
+// Punch through room's west wall
+world[EAST.y+5][EAST.x]=9;world[EAST.y+6][EAST.x]=9;
+
+// SOUTH ROOM (Cycle Burn) — below hub
+const SOUTH = { x: HUB.x+12, y: HUB.y+HUB.h+2, w: 16, h: 12 };
+for(let y=SOUTH.y;y<SOUTH.y+SOUTH.h;y++){
+  for(let x=SOUTH.x;x<SOUTH.x+SOUTH.w;x++){
+    if(x===SOUTH.x||x===SOUTH.x+SOUTH.w-1||y===SOUTH.y||y===SOUTH.y+SOUTH.h-1)world[y][x]=3;
+    else world[y][x]=10; // burn floor (tile type 10)
+  }
+}
+// Corridor south — open both hub's south wall AND the room's north wall
+for(let y=HUB.y+HUB.h-1;y<=SOUTH.y;y++){world[y][SOUTH.x+7]=2;world[y][SOUTH.x+8]=2;}
+// Punch through hub's south wall
+world[HUB.y+HUB.h-1][SOUTH.x+7]=2;world[HUB.y+HUB.h-1][SOUTH.x+8]=2;
+// Punch through room's north wall
+world[SOUTH.y][SOUTH.x+7]=10;world[SOUTH.y][SOUTH.x+8]=10;
+
+// NORTH (Swiss Vault) — hidden above hub, secret entrance in water
+const NORTH = { x: HUB.x+12, y: HUB.y-14, w: 16, h: 12 };
+for(let y=NORTH.y;y<NORTH.y+NORTH.h;y++){
+  for(let x=NORTH.x;x<NORTH.x+NORTH.w;x++){
+    if(x===NORTH.x||x===NORTH.x+NORTH.w-1||y===NORTH.y||y===NORTH.y+NORTH.h-1)world[y][x]=3;
+    else world[y][x]=11; // vault floor (tile type 11)
+  }
+}
+// Internal vault maze walls
+const vaultMaze = [
+  // Horizontal
+  [NORTH.x+3,NORTH.y+3,NORTH.x+7,NORTH.y+3],
+  [NORTH.x+9,NORTH.y+3,NORTH.x+13,NORTH.y+3],
+  [NORTH.x+2,NORTH.y+6,NORTH.x+6,NORTH.y+6],
+  [NORTH.x+8,NORTH.y+6,NORTH.x+13,NORTH.y+6],
+  [NORTH.x+4,NORTH.y+9,NORTH.x+11,NORTH.y+9],
+  // Vertical
+  [NORTH.x+7,NORTH.y+3,NORTH.x+7,NORTH.y+6],
+  [NORTH.x+13,NORTH.y+1,NORTH.x+13,NORTH.y+4],
+  [NORTH.x+2,NORTH.y+6,NORTH.x+2,NORTH.y+9],
+  [NORTH.x+11,NORTH.y+6,NORTH.x+11,NORTH.y+9],
+  // Single block closing the right-side gap
+  [NORTH.x+14,NORTH.y+6,NORTH.x+14,NORTH.y+6],
+];
+vaultMaze.forEach(([x1,y1,x2,y2])=>{
+  if(y1===y2)for(let x=x1;x<=x2;x++)world[y1][x]=3;
+  else for(let y=y1;y<=y2;y++)world[y][x1]=3;
+});
+// Vault core
+world[NORTH.y+1][NORTH.x+NORTH.w-2] = 12; // CORE tile type
+
+// Secret passage to vault — looks like solid wall but is walkable
+// Tile 14 = fake wall (renders as wall, but passable)
+// Tile 15 = fake wall with Swiss cross clue (subtle etching)
+const secretX = HUB.x+20;
+// The hub's north wall at this point becomes fake walls
+world[HUB.y][secretX] = 14;   // fake wall (hub border)
+world[HUB.y][secretX+1] = 15; // fake wall with cross clue
+// Hidden corridor up to vault — all fake walls
+for(let y=NORTH.y+NORTH.h-1;y<HUB.y;y++){world[y][secretX]=14;world[y][secretX+1]=14;}
+// Open the vault's south wall to connect
+world[NORTH.y+NORTH.h-1][secretX]=11;world[NORTH.y+NORTH.h-1][secretX+1]=11;
+
+// Room labels (decorative markers — tile type 13)
+// We'll use zone data for room identification instead
+
+function getZoneAt(tx,ty) {
+  for(const z of zones) if(Math.abs(tx-z.cx)<=z.radius&&Math.abs(ty-z.cy)<=z.radius) return z;
+  return null;
+}
+
+function getRoomAt(tx,ty) {
+  if(tx>=WEST.x&&tx<WEST.x+WEST.w&&ty>=WEST.y&&ty<WEST.y+WEST.h) return {name:'ASSEMBLY LAB',color:C.assemblyAccent};
+  if(tx>=EAST.x&&tx<EAST.x+EAST.w&&ty>=EAST.y&&ty<EAST.y+EAST.h) return {name:'BOUNDARY NODE',color:C.ddosAccent};
+  if(tx>=SOUTH.x&&tx<SOUTH.x+SOUTH.w&&ty>=SOUTH.y&&ty<SOUTH.y+SOUTH.h) return {name:'CYCLE TREASURY',color:C.burnAccent};
+  if(tx>=NORTH.x&&tx<NORTH.x+NORTH.w&&ty>=NORTH.y&&ty<NORTH.y+NORTH.h) return {name:'SWISS VAULT',color:C.vaultAccent};
+  return null;
+}
+
+// ============================================================
+// NPCs
+// ============================================================
+const npcs = [
+  // Main quest NPCs (inside hub zones)
+  { id:'ic_guide', x:zones[0].cx*TILE, y:zones[0].cy*TILE, color:C.npcBlue, quest:'internet_computer', name:'DOMINIC',
+    dialogues:[
+      {speaker:'DOMINIC',text:"Welcome, explorer. I'm the architect of the Internet Computer — the world's first truly decentralised cloud."},
+      {speaker:'DOMINIC',text:"The Internet Computer runs on a network of sovereign nodes across independent data centres worldwide. No single entity controls it."},
+      {speaker:'DOMINIC',text:"Smart contracts here are called 'canisters' — they hold both code AND data, and they run at web speed. No cloud provider needed."},
+      {speaker:'DOMINIC',text:"The IC processes over 500 million transactions daily, with block finality in under 2 seconds. Try getting that from AWS."},
+      {speaker:'DOMINIC',text:"The key insight: software should own itself. Applications on the IC are governed by DAOs, not corporations. That's real sovereignty."},
+      {speaker:'QUEST',text:"QUEST COMPLETE: The World Computer — You've learned what makes the Internet Computer fundamentally different from traditional cloud."},
+    ]},
+  { id:'caffeine_guide', x:zones[1].cx*TILE, y:zones[1].cy*TILE, color:C.npcGreen, quest:'caffeine', name:'BARISTA',
+    dialogues:[
+      {speaker:'BARISTA',text:"Hey! Welcome to the Caffeine zone. I build apps here by just... talking to them."},
+      {speaker:'BARISTA',text:"Caffeine is the world's first self-writing apps platform. Chat. Build. Own. That's the whole idea."},
+      {speaker:'BARISTA',text:"You describe what you want in plain English, and Caffeine writes the code, deploys the canister, and gives you a live app. In minutes."},
+      {speaker:'BARISTA',text:"Every app you build, you own. It deploys to the Internet Computer as a canister — no server bills, no vendor lock-in."},
+      {speaker:'BARISTA',text:"V3 just launched with multi-page apps, a visual composer, and an app marketplace. People are building real products here."},
+      {speaker:'QUEST',text:"QUEST COMPLETE: Chat. Build. Own. — You've discovered how Caffeine makes the Internet Computer accessible to everyone."},
+    ]},
+  { id:'sw_guide', x:zones[2].cx*TILE, y:zones[2].cy*TILE, color:C.npcPink, quest:'self_writing', name:'ORACLE',
+    dialogues:[
+      {speaker:'ORACLE',text:"You've reached the frontier. Self-Writing Cloud is what happens when AI meets decentralised infrastructure."},
+      {speaker:'ORACLE',text:"Imagine software that writes, tests, deploys, and maintains itself — all on tamperproof infrastructure. That's Self-Writing Cloud."},
+      {speaker:'ORACLE',text:"AI agents running inside canisters can autonomously create and manage other canisters. Software that creates more software."},
+      {speaker:'ORACLE',text:"The key difference from traditional AI-generated code: these apps run on sovereign infrastructure. No Big Tech middleman."},
+      {speaker:'ORACLE',text:"Caffeine is the first proof point. But Self-Writing Cloud is the paradigm — every industry will be reshaped by autonomous software."},
+      {speaker:'QUEST',text:"QUEST COMPLETE: Self-Writing Cloud — You've glimpsed the future where software builds and governs itself."},
+    ]},
+  { id:'ce_guide', x:zones[3].cx*TILE, y:zones[3].cy*TILE, color:C.npcYellow, quest:'cloud_engines', name:'ENGINEER',
+    dialogues:[
+      {speaker:'ENGINEER',text:"Cloud Engines are the beating heart of the Internet Computer. Let me show you how this machine actually works."},
+      {speaker:'ENGINEER',text:"A Cloud Engine is a standardised compute unit — node machines running the IC protocol in independent data centres."},
+      {speaker:'ENGINEER',text:"They're grouped into subnets. Each subnet is a mini-blockchain that runs canisters. More subnets = more capacity. It scales horizontally."},
+      {speaker:'ENGINEER',text:"Node providers earn ICP tokens for running Cloud Engines. It's decentralised infrastructure with real economic incentives."},
+      {speaker:'ENGINEER',text:"The Swiss subnet, the European sovereign cloud, AI-specific subnets — each is purpose-built. This isn't one-size-fits-all cloud."},
+      {speaker:'QUEST',text:"QUEST COMPLETE: Cloud Engines — You now understand the physical infrastructure powering the World Computer."},
+    ]},
+  { id:'m70_guide', x:zones[4].cx*TILE, y:zones[4].cy*TILE, color:C.npcRed, quest:'mission70', name:'ECONOMIST',
+    dialogues:[
+      {speaker:'ECONOMIST',text:"Mission 70 is the most ambitious tokenomics initiative in crypto. And it's working."},
+      {speaker:'ECONOMIST',text:"The goal: reduce ICP inflation from 9.72% to roughly 2.92% — a 70% reduction. Hence the name."},
+      {speaker:'ECONOMIST',text:"It works through cycle burn mechanics. When people use canisters, they burn cycles. More usage = more ICP burned = lower inflation."},
+      {speaker:'ECONOMIST',text:"As adoption grows, the network becomes deflationary. Not through artificial scarcity, but through genuine utility."},
+      {speaker:'ECONOMIST',text:"This aligns everyone's incentives: builders create useful apps, users consume cycles, and the token economics improve for all holders."},
+      {speaker:'QUEST',text:"QUEST COMPLETE: Mission 70 — You understand how utility-driven deflation creates a sustainable token economy."},
+    ]},
+
+  // WEST ROOM — Canister Assembly
+  { id:'assembler', x:(WEST.x+8)*TILE, y:(WEST.y+6)*TILE, color:'#b0b0b0', quest:'canister_assembly', name:'DEPLOYER',
+    isSideQuest:'canister_assembly',
+    dialogues:[
+      {speaker:'DEPLOYER',text:"Welcome to the Assembly Lab. I can help you deploy a canister, but I need 4 code fragments first."},
+      {speaker:'DEPLOYER',text:"They're scattered in the four corners of the main hub — glowing purple shards. Find: MODULE, STABLE, PUBLIC, and SYSTEM."},
+      {speaker:'DEPLOYER',text:"Canisters are the building blocks of everything on the IC. Each one is a self-contained unit of code and state."},
+    ],
+    dialoguesReady:[
+      {speaker:'DEPLOYER',text:"You found all 4 fragments! Now let's assemble them in the right order to deploy a valid canister."},
+      {speaker:'DEPLOYER',text:"Use LEFT/RIGHT to select, SPACE to place. Correct order: MODULE → STABLE → PUBLIC → SYSTEM."},
+    ],
+    dialoguesDone:[
+      {speaker:'DEPLOYER',text:"That canister is deployed and running. You've just put code on tamperproof infrastructure that nobody can shut down."},
+      {speaker:'QUEST',text:"SIDE QUEST COMPLETE: Canister Assembly — You built and deployed a canister on the Internet Computer."},
+    ]},
+
+  // EAST ROOM — DDoS Defense
+  { id:'boundary', x:(EAST.x+8)*TILE, y:(EAST.y+6)*TILE, color:'#55e2e2', quest:'ddos_defense', name:'FIREWALL',
+    isSideQuest:'ddos_defense',
+    dialogues:[
+      {speaker:'FIREWALL',text:"You've entered the Boundary Node station. I'm the gateway between users and the IC. And right now, we're under attack."},
+      {speaker:'FIREWALL',text:"I need you to help filter traffic. Green packets = legitimate. Red packets = DDoS attacks. Block the red, pass the green."},
+      {speaker:'FIREWALL',text:"Boundary nodes are the IC's first line of defence. They route HTTP requests to the right subnet and filter malicious traffic."},
+      {speaker:'FIREWALL',text:"Ready? Use keys 1/2/3/4 to block packets in each lane. You have 20 seconds. Don't let the attacks through!"},
+    ],
+    dialoguesDone:[
+      {speaker:'FIREWALL',text:"Excellent reflexes. The boundary nodes held. That's how the IC stays online — decentralised gateways that can't be taken out."},
+      {speaker:'QUEST',text:"SIDE QUEST COMPLETE: DDoS Defense — You've defended the network's boundary layer from attack."},
+    ]},
+
+  // SOUTH ROOM — Cycle Burn
+  { id:'burn_master', x:(SOUTH.x+8)*TILE, y:(SOUTH.y+6)*TILE, color:'#e28055', quest:'cycle_burn', name:'TREASURER',
+    isSideQuest:'cycle_burn',
+    dialogues:[
+      {speaker:'TREASURER',text:"Welcome to the Cycle Treasury. The network is running low on cycles. I need you to make some tough calls."},
+      {speaker:'TREASURER',text:"You have a limited budget. Each canister has a utility score and a cost. Fund the ones that matter most."},
+      {speaker:'TREASURER',text:"This is how the IC economy works — cycles are burned when canisters compute. Every allocation is a real economic decision."},
+      {speaker:'TREASURER',text:"Ready? UP/DOWN to select canisters, LEFT/RIGHT to adjust funding (hold SHIFT for bigger steps). ENTER to submit."},
+    ],
+    dialoguesDone:[
+      {speaker:'TREASURER',text:"Smart allocation. You kept the high-utility canisters running. That's the cycle economy in action."},
+      {speaker:'QUEST',text:"SIDE QUEST COMPLETE: Cycle Burn Challenge — You've experienced the economic decisions that drive ICP's deflationary model."},
+    ]},
+
+  // NORTH ROOM hint NPC (in hub, near water)
+  { id:'vault_hint', x:(HUB.x+15)*TILE, y:(HUB.y+4)*TILE, color:'#4a9eb8', quest:'swiss_vault', name:'SWISS GUARD',
+    isSideQuest:'swiss_vault',
+    dialogues:[
+      {speaker:'SWISS GUARD',text:"The Swiss Vault is hidden well. The walls of this hub are not all what they seem — some bear marks that only the observant will notice."},
+      {speaker:'SWISS GUARD',text:"Switzerland hosts some of the IC's most important sovereign subnets. Data there is governed by Swiss law, not Big Tech terms."},
+      {speaker:'SWISS GUARD',text:"Look along the northern wall for a cross etched into the stone. Walk into it. Not everything that looks solid is impassable."},
+    ],
+    dialoguesDone:[
+      {speaker:'SWISS GUARD',text:"You reached the Core. The Swiss subnet proves that decentralisation isn't just ideology — it's jurisdictional reality."},
+      {speaker:'QUEST',text:"SIDE QUEST COMPLETE: Swiss Vault — You've navigated the sovereign data centre and understood why geography matters in cloud computing."},
+    ]},
+];
+
+// ============================================================
+// CODE FRAGMENTS (hub corners)
+// ============================================================
+const fragmentNames = ['MODULE','STABLE','PUBLIC','SYSTEM'];
+const fragmentColors = ['#b055e2','#8055e2','#e055b0','#55b0e2'];
+const codeFragments = [
+  { x:(HUB.x+2)*TILE, y:(HUB.y+2)*TILE, collected:false, id:0, name:'MODULE', bobOffset:0 },
+  { x:(HUB.x+HUB.w-3)*TILE, y:(HUB.y+2)*TILE, collected:false, id:1, name:'STABLE', bobOffset:1.5 },
+  { x:(HUB.x+2)*TILE, y:(HUB.y+HUB.h-3)*TILE, collected:false, id:2, name:'PUBLIC', bobOffset:3 },
+  { x:(HUB.x+HUB.w-3)*TILE, y:(HUB.y+HUB.h-3)*TILE, collected:false, id:3, name:'SYSTEM', bobOffset:4.5 },
 ];
 
 // Cycle pickups
 const pickups = [];
-function spawnPickups() {
-  const spots = [
-    [15,6],[18,6],[22,6],[25,6],
-    [8,10],[8,13],[8,17],[8,20],
-    [32,10],[32,13],[32,17],[32,20],
-    [15,24],[18,24],[22,24],[25,24],
-    [14,10],[26,10],[14,20],[26,20],
-    [17,12],[23,12],[17,18],[23,18],
-    [20,10],[20,20],[15,15],[25,15],
-    [3,3],[37,3],[3,27],[37,27],
-  ];
-  spots.forEach(([x,y]) => {
-    pickups.push({ x: x * TILE + 8, y: y * TILE + 8, collected: false, bobOffset: Math.random() * Math.PI * 2 });
-  });
-}
-spawnPickups();
+// Pickup offsets relative to HUB origin
+[[5,4],[8,4],[12,4],[15,4],  // top row
+ [4,8],[4,11],[4,15],[4,18],  // left column
+ [36,8],[36,11],[36,15],[36,18], // right column
+ [5,22],[8,22],[12,22],[15,22],  // bottom row
+ [10,8],[20,8],[10,18],[20,18],  // mid cross
+ [13,11],[19,11],[13,16],[19,16], // inner ring
+ [20,8],[20,18],[5,13],[25,13],   // axis pickups
+ [30,4],[30,22],[10,4],[30,13],   // extra spread
+].forEach(([dx,dy])=>{
+  const x = HUB.x+dx, y = HUB.y+dy;
+  if(x>0&&x<COLS&&y>0&&y<ROWS) // safety check
+  pickups.push({x:x*TILE+8,y:y*TILE+8,collected:false,bobOffset:Math.random()*Math.PI*2});
+});
 
-// --- KEYBOARD LABEL MAP (decorative) ---
-const keyLabels = [
-  'ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12',
+// Key labels
+const keyLabels=['ESC','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12',
   '`','1','2','3','4','5','6','7','8','9','0','-','=','⌫',
   '⇥','Q','W','E','R','T','Y','U','I','O','P','[',']','\\',
   '⇪','A','S','D','F','G','H','J','K','L',';',"'",'↵',
   '⇧','Z','X','C','V','B','N','M',',','.','/','⇧',
-  'fn','⌃','⌥','⌘','','⌘','⌥','←','↑','↓','→'
-];
+  'fn','⌃','⌥','⌘','','⌘','⌥','←','↑','↓','→'];
+function getKeyLabel(tx,ty){return keyLabels[Math.abs((ty*7+tx*3)%keyLabels.length)];}
 
-function getKeyLabel(tx, ty) {
-  const idx = ((ty * 7 + tx * 3) % keyLabels.length);
-  return keyLabels[Math.abs(idx)];
+// ============================================================
+// TILE DRAWING
+// ============================================================
+function drawKeyTile(sx,sy,tx,ty,isSpecial,zoneColor){
+  ctx.fillStyle=C.keyEdge;ctx.fillRect(sx+2,sy+6,28,28);
+  ctx.fillStyle=isSpecial?zoneColor||C.keyCap:C.keyCap;
+  if(isSpecial)ctx.globalAlpha=0.4;
+  ctx.fillRect(sx+2,sy+2,28,24);ctx.globalAlpha=1;
+  ctx.fillStyle=isSpecial?zoneColor||C.keyLight:C.keyLight;ctx.globalAlpha=0.3;
+  ctx.fillRect(sx+2,sy+2,28,2);ctx.fillRect(sx+2,sy+2,2,24);ctx.globalAlpha=1;
+  ctx.fillStyle=isSpecial?'#fff':'#8a7aa0';ctx.font='8px monospace';ctx.textAlign='center';
+  ctx.fillText(getKeyLabel(tx,ty),sx+16,sy+17);
+}
+function drawPath(sx,sy){ctx.fillStyle=C.path;ctx.fillRect(sx,sy,TILE,TILE);ctx.strokeStyle='#3a2060';ctx.lineWidth=0.5;ctx.strokeRect(sx,sy,TILE,TILE);}
+function drawWall(sx,sy){ctx.fillStyle='#1a0830';ctx.fillRect(sx,sy,TILE,TILE);ctx.fillStyle='#2a1850';ctx.fillRect(sx+2,sy+2,28,12);ctx.fillRect(sx+8,sy+18,16,12);}
+function drawWater(sx,sy){ctx.fillStyle=C.water;ctx.fillRect(sx,sy,TILE,TILE);ctx.fillStyle='#1a3060';const w=Math.sin(state.time*2+sx*0.1)*3;ctx.fillRect(sx+4,sy+10+w,24,2);ctx.fillRect(sx+8,sy+20+w*0.7,16,2);}
+function drawFakeWall(sx,sy){drawWall(sx,sy);} // looks identical to real wall
+function drawFakeWallClue(sx,sy){
+  drawWall(sx,sy);
+  // Very subtle Swiss cross etched into the brick — only visible if you look closely
+  ctx.fillStyle='#2a1850'; ctx.globalAlpha=0.25+Math.sin(state.time*1.5)*0.05;
+  // Horizontal bar of cross
+  ctx.fillRect(sx+10,sy+14,12,4);
+  // Vertical bar of cross
+  ctx.fillRect(sx+13,sy+9,6,14);
+  ctx.globalAlpha=1;
+}
+function drawZoneBorder(sx,sy,c){ctx.fillStyle='#251540';ctx.fillRect(sx,sy,TILE,TILE);ctx.strokeStyle=c||C.purple;ctx.lineWidth=2;ctx.globalAlpha=0.6+Math.sin(state.time*3)*0.2;ctx.strokeRect(sx+1,sy+1,30,30);ctx.globalAlpha=1;}
+
+function drawRoomFloor(sx,sy,type){
+  const colors = {8:[C.assemblyFloor,C.assemblyAccent],9:[C.ddosFloor,C.ddosAccent],10:[C.burnFloor,C.burnAccent],11:[C.vaultFloor,C.vaultAccent]};
+  const [floor,accent] = colors[type]||[C.dark,'#555'];
+  ctx.fillStyle=floor;ctx.fillRect(sx,sy,TILE,TILE);
+  ctx.strokeStyle=accent;ctx.lineWidth=0.3;ctx.globalAlpha=0.4;ctx.strokeRect(sx,sy,TILE,TILE);ctx.globalAlpha=1;
+  // Subtle grid pattern
+  ctx.fillStyle=accent;ctx.globalAlpha=0.08;
+  ctx.fillRect(sx+14,sy,2,TILE);ctx.fillRect(sx,sy+14,TILE,2);ctx.globalAlpha=1;
 }
 
-// --- RENDERING ---
-function drawKeyTile(sx, sy, tx, ty, isSpecial, zoneColor) {
-  const inset = 2;
-  const depth = 4;
+function drawVaultCore(sx,sy){
+  ctx.fillStyle=C.vaultFloor;ctx.fillRect(sx,sy,TILE,TILE);
+  ctx.fillStyle='#29ABE2';ctx.globalAlpha=0.5+Math.sin(state.time*4)*0.3;
+  ctx.beginPath();ctx.arc(sx+16,sy+16,12,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
+  ctx.fillStyle='#fff';ctx.font='bold 9px monospace';ctx.textAlign='center';ctx.fillText('CORE',sx+16,sy+19);
+}
 
-  // Key base (shadow)
-  ctx.fillStyle = C.keyEdge;
-  ctx.fillRect(sx + inset, sy + inset + depth, TILE - inset*2, TILE - inset*2);
+// Entity drawing
+function drawPlayer(x,y){
+  const moving=state.keys.ArrowUp||state.keys.ArrowDown||state.keys.ArrowLeft||state.keys.ArrowRight||state.keys.w||state.keys.s||state.keys.a||state.keys.d;
+  const bob=Math.sin(state.time*8)*(moving?2:0);
+  ctx.fillStyle='rgba(0,0,0,0.3)';ctx.beginPath();ctx.ellipse(x+16,y+30,10,4,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=C.cyan;ctx.fillRect(x+8,y+12+bob,16,14);
+  ctx.fillStyle='#f0d0a0';ctx.fillRect(x+9,y+2+bob,14,12);
+  const p=state.player,ex=p.dir==='left'?-2:p.dir==='right'?2:0,ey=p.dir==='up'?-1:p.dir==='down'?1:0;
+  ctx.fillStyle=C.bg;ctx.fillRect(x+11+ex,y+6+bob+ey,3,3);ctx.fillRect(x+18+ex,y+6+bob+ey,3,3);
+  ctx.fillStyle='#4a3030';ctx.fillRect(x+8,y+1+bob,16,4);
+  const la=Math.sin(state.time*10)*2;ctx.fillStyle='#2a1a40';
+  ctx.fillRect(x+10,y+26+bob,5,6+(moving?la:0));ctx.fillRect(x+17,y+26+bob,5,6-(moving?la:0));
+}
 
-  // Key cap
-  ctx.fillStyle = isSpecial ? zoneColor || C.keyCap : C.keyCap;
-  if (isSpecial) {
-    ctx.globalAlpha = 0.4;
-    ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, TILE - inset*2 - depth);
-    ctx.globalAlpha = 1;
-  } else {
-    ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, TILE - inset*2 - depth);
+function drawNPC(npc,sx,sy){
+  const bob=Math.sin(state.time*2+npc.x*0.01)*2,q=state.quests[npc.quest];
+  ctx.fillStyle='rgba(0,0,0,0.3)';ctx.beginPath();ctx.ellipse(sx+16,sy+30,10,4,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=npc.color;ctx.fillRect(sx+8,sy+12+bob,16,14);
+  ctx.fillStyle='#f0d0a0';ctx.fillRect(sx+9,sy+2+bob,14,12);
+  ctx.fillStyle=C.bg;ctx.fillRect(sx+11,sy+6+bob,3,3);ctx.fillRect(sx+18,sy+6+bob,3,3);
+  if(!q.done){
+    ctx.fillStyle=npc.isSideQuest?'#e28055':C.lime;ctx.font='bold 16px monospace';ctx.textAlign='center';
+    ctx.fillText(npc.isSideQuest?'?':'!',sx+16,sy-4+Math.sin(state.time*4)*3);
+  }else{ctx.fillStyle=C.cyan;ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.fillText('✓',sx+16,sy-2);}
+  ctx.fillStyle='rgba(14,3,31,0.8)';ctx.font='9px monospace';ctx.textAlign='center';
+  const nw=ctx.measureText(npc.name).width+8;ctx.fillRect(sx+16-nw/2,sy-18,nw,14);
+  ctx.fillStyle=npc.color;ctx.fillText(npc.name,sx+16,sy-8);
+}
+
+function drawPickup(p,sx,sy){
+  if(p.collected)return;const bob=Math.sin(state.time*3+p.bobOffset)*4;
+  ctx.fillStyle=`rgba(221,247,48,${0.3+Math.sin(state.time*5+p.bobOffset)*0.2})`;
+  ctx.beginPath();ctx.arc(sx+8,sy+8+bob,10,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=C.lime;ctx.beginPath();
+  ctx.moveTo(sx+8,sy+2+bob);ctx.lineTo(sx+14,sy+5+bob);ctx.lineTo(sx+14,sy+11+bob);
+  ctx.lineTo(sx+8,sy+14+bob);ctx.lineTo(sx+2,sy+11+bob);ctx.lineTo(sx+2,sy+5+bob);ctx.closePath();ctx.fill();
+  ctx.fillStyle=C.dark;ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText('C',sx+8,sy+10+bob);
+}
+
+function drawCodeFragment(f,sx,sy){
+  if(f.collected)return;const bob=Math.sin(state.time*2.5+f.bobOffset)*5;
+  ctx.fillStyle=`rgba(176,85,226,${0.4+Math.sin(state.time*3+f.bobOffset)*0.2})`;
+  ctx.beginPath();ctx.arc(sx+16,sy+12+bob,18,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=fragmentColors[f.id];ctx.beginPath();
+  ctx.moveTo(sx+16,sy+bob);ctx.lineTo(sx+24,sy+8+bob);ctx.lineTo(sx+20,sy+24+bob);
+  ctx.lineTo(sx+12,sy+24+bob);ctx.lineTo(sx+8,sy+8+bob);ctx.closePath();ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='bold 7px monospace';ctx.textAlign='center';ctx.fillText(f.name,sx+16,sy+14+bob);
+}
+
+function drawParticles(){state.particles=state.particles.filter(p=>p.life>0);state.particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.02;ctx.fillStyle=p.color;ctx.globalAlpha=p.life;ctx.fillRect(p.x-state.camera.x,p.y-state.camera.y,p.size,p.size);ctx.globalAlpha=1;});}
+function drawFloatingTexts(){state.floatingTexts=state.floatingTexts.filter(t=>t.life>0);state.floatingTexts.forEach(t=>{t.y-=0.5;t.life-=0.015;ctx.fillStyle=t.color;ctx.globalAlpha=t.life;ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(t.text,t.x-state.camera.x,t.y-state.camera.y);ctx.globalAlpha=1;});}
+
+function drawZoneLabel(){
+  const ptx=Math.floor((state.player.x+16)/TILE),pty=Math.floor((state.player.y+16)/TILE);
+  const zone=getZoneAt(ptx,pty);const room=getRoomAt(ptx,pty);
+  const label=zone||room;
+  if(label){
+    ctx.fillStyle=label.color;ctx.globalAlpha=0.12;ctx.fillRect(0,0,canvas.width,canvas.height);ctx.globalAlpha=1;
+    ctx.fillStyle=label.color;ctx.font='bold 14px monospace';ctx.textAlign='center';
+    ctx.fillText('— '+label.name+' —',canvas.width/2,55);
   }
-
-  // Key highlight edge
-  ctx.fillStyle = isSpecial ? zoneColor || C.keyLight : C.keyLight;
-  ctx.globalAlpha = isSpecial ? 0.3 : 0.3;
-  ctx.fillRect(sx + inset, sy + inset, TILE - inset*2, 2);
-  ctx.fillRect(sx + inset, sy + inset, 2, TILE - inset*2 - depth);
-  ctx.globalAlpha = 1;
-
-  // Key label
-  const label = getKeyLabel(tx, ty);
-  ctx.fillStyle = isSpecial ? '#ffffff' : '#8a7aa0';
-  ctx.font = '8px monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText(label, sx + TILE/2, sy + TILE/2 + 1);
 }
 
-function drawPath(sx, sy) {
-  ctx.fillStyle = C.path;
-  ctx.fillRect(sx, sy, TILE, TILE);
-  // subtle grid lines
-  ctx.strokeStyle = '#3a2060';
-  ctx.lineWidth = 0.5;
-  ctx.strokeRect(sx, sy, TILE, TILE);
-}
-
-function drawWall(sx, sy) {
-  ctx.fillStyle = '#1a0830';
-  ctx.fillRect(sx, sy, TILE, TILE);
-  ctx.fillStyle = '#2a1850';
-  ctx.fillRect(sx + 2, sy + 2, TILE - 4, TILE/2 - 2);
-  ctx.fillRect(sx + TILE/4, sy + TILE/2 + 2, TILE/2, TILE/2 - 4);
-}
-
-function drawWater(sx, sy, time) {
-  ctx.fillStyle = C.water;
-  ctx.fillRect(sx, sy, TILE, TILE);
-  // animated waves
-  ctx.fillStyle = '#1a3060';
-  const wave = Math.sin(time * 2 + sx * 0.1) * 3;
-  ctx.fillRect(sx + 4, sy + 10 + wave, TILE - 8, 2);
-  ctx.fillRect(sx + 8, sy + 20 + wave * 0.7, TILE - 16, 2);
-}
-
-function drawZoneBorder(sx, sy, zoneColor) {
-  ctx.fillStyle = C.keyDark;
-  ctx.fillRect(sx, sy, TILE, TILE);
-  ctx.strokeStyle = zoneColor || C.purple;
-  ctx.lineWidth = 2;
-  ctx.globalAlpha = 0.6 + Math.sin(state.time * 3) * 0.2;
-  ctx.strokeRect(sx + 1, sy + 1, TILE - 2, TILE - 2);
-  ctx.globalAlpha = 1;
-}
-
-function getZoneAt(tx, ty) {
-  for (const z of zones) {
-    if (Math.abs(tx - z.cx) <= z.radius && Math.abs(ty - z.cy) <= z.radius) return z;
+function drawMinimap(){
+  const mw=minimapCanvas.width,mh=minimapCanvas.height;
+  const sx=mw/COLS,sy=mh/ROWS;
+  minimapCtx.fillStyle=C.bg;minimapCtx.fillRect(0,0,mw,mh);
+  for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+    const t=world[y][x];let col=null;
+    if(t===3||t===14||t===15)col='#1a0830';else if(t===4)col=C.water;else if(t===2)col=C.path;
+    else if(t===5||t===6){const z=getZoneAt(x,y);col=z?z.color:C.purple;}
+    else if(t===8)col=C.assemblyAccent;else if(t===9)col=C.ddosAccent;
+    else if(t===10)col=C.burnAccent;else if(t===11||t===12)col=C.vaultAccent;
+    if(col){minimapCtx.fillStyle=col;minimapCtx.globalAlpha=0.5;minimapCtx.fillRect(x*sx,y*sy,Math.max(sx,1.5),Math.max(sy,1.5));minimapCtx.globalAlpha=1;}
   }
-  return null;
+  minimapCtx.fillStyle=C.cyan;minimapCtx.fillRect((state.player.x/TILE)*sx-1,(state.player.y/TILE)*sy-1,3,3);
+  npcs.forEach(n=>{minimapCtx.fillStyle=state.quests[n.quest].done?'#555':n.color;minimapCtx.fillRect((n.x/TILE)*sx-1,(n.y/TILE)*sy-1,2,2);});
+  codeFragments.forEach(f=>{if(!f.collected){minimapCtx.fillStyle='#b055e2';minimapCtx.fillRect((f.x/TILE)*sx-1,(f.y/TILE)*sy-1,2,2);}});
 }
 
-function drawPlayer(x, y) {
-  const p = state.player;
-  const bobY = Math.sin(state.time * 8) * (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? 2 : 0);
-
-  // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.3)';
-  ctx.beginPath();
-  ctx.ellipse(x + 16, y + 30, 10, 4, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Body
-  ctx.fillStyle = C.cyan;
-  ctx.fillRect(x + 8, y + 12 + bobY, 16, 14);
-
-  // Head
-  ctx.fillStyle = '#f0d0a0';
-  ctx.fillRect(x + 9, y + 2 + bobY, 14, 12);
-
-  // Eyes
-  const eyeOffsetX = p.dir === 'left' ? -2 : p.dir === 'right' ? 2 : 0;
-  const eyeOffsetY = p.dir === 'up' ? -1 : p.dir === 'down' ? 1 : 0;
-  ctx.fillStyle = '#0E031F';
-  ctx.fillRect(x + 11 + eyeOffsetX, y + 6 + bobY + eyeOffsetY, 3, 3);
-  ctx.fillRect(x + 18 + eyeOffsetX, y + 6 + bobY + eyeOffsetY, 3, 3);
-
-  // Hair
-  ctx.fillStyle = '#4a3030';
-  ctx.fillRect(x + 8, y + 1 + bobY, 16, 4);
-
-  // Legs
-  const legAnim = Math.sin(state.time * 10) * 2;
-  ctx.fillStyle = '#2a1a40';
-  ctx.fillRect(x + 10, y + 26 + bobY, 5, 6 + (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? legAnim : 0));
-  ctx.fillRect(x + 17, y + 26 + bobY, 5, 6 - (state.keys.ArrowUp || state.keys.ArrowDown || state.keys.ArrowLeft || state.keys.ArrowRight ? legAnim : 0));
+// ============================================================
+// MINIGAME: DDoS DEFENSE (overlay)
+// ============================================================
+function initDDoS(){
+  state.ddosPackets=[];state.ddosScore=0;state.ddosMissed=0;state.ddosBlocked=0;
+  state.ddosTimer=state.ddosDuration;state.ddosSpawnTimer=0;state.ddosLaneCooldown=[0,0,0,0];
+  state.screen='minigame_ddos';mgCanvas.style.display='block';
 }
-
-function drawNPC(npc, sx, sy) {
-  const bob = Math.sin(state.time * 2 + npc.x * 0.01) * 2;
-  const q = state.quests[npc.quest];
-
-  // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.3)';
-  ctx.beginPath();
-  ctx.ellipse(sx + 16, sy + 30, 10, 4, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Body
-  ctx.fillStyle = npc.color;
-  ctx.fillRect(sx + 8, sy + 12 + bob, 16, 14);
-
-  // Head
-  ctx.fillStyle = '#f0d0a0';
-  ctx.fillRect(sx + 9, sy + 2 + bob, 14, 12);
-
-  // Eyes
-  ctx.fillStyle = '#0E031F';
-  ctx.fillRect(sx + 11, sy + 6 + bob, 3, 3);
-  ctx.fillRect(sx + 18, sy + 6 + bob, 3, 3);
-
-  // Quest indicator
-  if (!q.done) {
-    ctx.fillStyle = C.lime;
-    ctx.font = 'bold 16px monospace';
-    ctx.textAlign = 'center';
-    const excBob = Math.sin(state.time * 4) * 3;
-    ctx.fillText('!', sx + 16, sy - 4 + excBob);
-  } else {
-    ctx.fillStyle = C.cyan;
-    ctx.font = 'bold 14px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('✓', sx + 16, sy - 2);
+function updateDDoS(dt){
+  state.ddosTimer-=dt;state.ddosSpawnTimer-=dt;
+  for(let i=0;i<4;i++)state.ddosLaneCooldown[i]=Math.max(0,state.ddosLaneCooldown[i]-dt);
+  if(state.ddosTimer<=0){finishDDoS();return;}
+  if(state.ddosSpawnTimer<=0){
+    const lane=Math.floor(Math.random()*4);
+    state.ddosPackets.push({lane,x:800,speed:150+Math.random()*100+(state.ddosDuration-state.ddosTimer)*5,isAttack:Math.random()<0.45,blocked:false,passed:false});
+    state.ddosSpawnTimer=0.4+Math.random()*0.3-(state.ddosDuration-state.ddosTimer)*0.01;
   }
-
-  // Name plate
-  ctx.fillStyle = 'rgba(14,3,31,0.8)';
-  const nameWidth = ctx.measureText(npc.name).width + 8;
-  ctx.fillRect(sx + 16 - nameWidth/2, sy - 18, nameWidth, 14);
-  ctx.fillStyle = npc.color;
-  ctx.font = '9px monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText(npc.name, sx + 16, sy - 8);
+  state.ddosPackets.forEach(p=>{if(!p.blocked&&!p.passed){p.x-=p.speed*dt;if(p.x<60){p.passed=true;if(p.isAttack)state.ddosMissed++;else state.ddosScore+=10;}}});
+  state.ddosPackets=state.ddosPackets.filter(p=>!p.passed&&(!p.blocked||p.blockAnim>0));
+  state.ddosPackets.forEach(p=>{if(p.blocked)p.blockAnim=(p.blockAnim||0.5)-dt;});
+}
+function blockLane(lane){
+  if(state.ddosLaneCooldown[lane]>0)return;state.ddosLaneCooldown[lane]=0.3;
+  let closest=null,cd=Infinity;
+  state.ddosPackets.forEach(p=>{if(p.lane===lane&&!p.blocked&&!p.passed&&p.x<200&&p.x>40&&p.x<cd){cd=p.x;closest=p;}});
+  if(closest){closest.blocked=true;closest.blockAnim=0.5;if(closest.isAttack){state.ddosBlocked++;state.ddosScore+=20;}else state.ddosScore-=15;}
+}
+function renderDDoS(){
+  mgCtx.clearRect(0,0,800,600);mgCtx.fillStyle='rgba(14,3,31,0.95)';mgCtx.fillRect(0,0,800,600);
+  mgCtx.fillStyle=C.cyan;mgCtx.font='bold 18px monospace';mgCtx.textAlign='center';mgCtx.fillText('DDoS DEFENSE — BOUNDARY NODE',400,40);
+  mgCtx.fillStyle=state.ddosTimer<5?C.red:C.lime;mgCtx.font='14px monospace';
+  mgCtx.fillText(`Time: ${Math.ceil(state.ddosTimer)}s | Score: ${state.ddosScore} | Blocked: ${state.ddosBlocked} | Leaked: ${state.ddosMissed}`,400,65);
+  const lH=100,sY=100;
+  for(let i=0;i<4;i++){const ly=sY+i*lH;mgCtx.fillStyle=i%2?'rgba(26,10,46,0.5)':'rgba(42,26,64,0.5)';mgCtx.fillRect(60,ly,740,lH-10);mgCtx.fillStyle='#8a7aa0';mgCtx.font='12px monospace';mgCtx.textAlign='center';mgCtx.fillText(`[${i+1}]`,30,ly+lH/2);if(state.ddosLaneCooldown[i]>0){mgCtx.fillStyle='rgba(41,171,226,0.3)';mgCtx.fillRect(60,ly,140,lH-10);}mgCtx.strokeStyle='#3a2060';mgCtx.lineWidth=1;mgCtx.beginPath();mgCtx.moveTo(60,ly+lH-10);mgCtx.lineTo(800,ly+lH-10);mgCtx.stroke();}
+  mgCtx.strokeStyle=C.cyan;mgCtx.lineWidth=2;mgCtx.setLineDash([5,5]);mgCtx.beginPath();mgCtx.moveTo(60,sY);mgCtx.lineTo(60,sY+4*lH);mgCtx.stroke();mgCtx.setLineDash([]);
+  state.ddosPackets.forEach(p=>{if(p.blocked){mgCtx.globalAlpha=p.blockAnim||0;mgCtx.fillStyle='#fff';mgCtx.font='bold 16px monospace';mgCtx.textAlign='center';mgCtx.fillText('✕',p.x,sY+p.lane*lH+lH/2);mgCtx.globalAlpha=1;return;}if(p.passed)return;const py=sY+p.lane*lH+(lH-10)/2;if(p.isAttack){mgCtx.fillStyle=C.red;mgCtx.fillRect(p.x-12,py-12,24,24);mgCtx.fillStyle='#fff';mgCtx.font='bold 14px monospace';mgCtx.textAlign='center';mgCtx.fillText('☠',p.x,py+5);}else{mgCtx.fillStyle='#55e280';mgCtx.fillRect(p.x-12,py-12,24,24);mgCtx.fillStyle='#fff';mgCtx.font='bold 12px monospace';mgCtx.textAlign='center';mgCtx.fillText('GET',p.x,py+4);}});
+  mgCtx.fillStyle='rgba(14,3,31,0.8)';mgCtx.fillRect(200,560,400,30);mgCtx.fillStyle='#8a7aa0';mgCtx.font='12px monospace';mgCtx.textAlign='center';mgCtx.fillText('Keys 1-4 block red packets. Let green through!',400,580);
+}
+function finishDDoS(){
+  mgCanvas.style.display='none';state.screen='playing';
+  if(state.ddosMissed<5&&state.ddosBlocked>3&&!state.quests.ddos_defense.done){
+    state.quests.ddos_defense.done=true;state.questsCompleted++;state.cycles+=80;updateHUD();
+    spawnBurst(state.player.x+16,state.player.y+16);
+    showSideDialogue(npcs.find(n=>n.id==='boundary'),'dialoguesDone');
+    if(state.questsCompleted>=state.totalQuests)setTimeout(showCompletion,500);
+  }else if(state.ddosMissed>=5||state.ddosBlocked<=3){
+    state.dialogueQueue=[{speaker:'FIREWALL',text:`Defence failed — ${state.ddosMissed} attacks leaked through. Need fewer than 5 leaks and more than 3 blocks. Try again!`}];
+    state.dialogueIndex=0;state.screen='dialogue';showDialogue();
+  }
 }
 
-function drawPickup(p, sx, sy) {
-  if (p.collected) return;
-  const bob = Math.sin(state.time * 3 + p.bobOffset) * 4;
-  const glow = 0.3 + Math.sin(state.time * 5 + p.bobOffset) * 0.2;
-
-  // Glow
-  ctx.fillStyle = `rgba(221,247,48,${glow})`;
-  ctx.beginPath();
-  ctx.arc(sx + 8, sy + 8 + bob, 10, 0, Math.PI * 2);
-  ctx.fill();
-
-  // Cycle symbol (hexagon-ish)
-  ctx.fillStyle = C.lime;
-  ctx.beginPath();
-  ctx.moveTo(sx + 8, sy + 2 + bob);
-  ctx.lineTo(sx + 14, sy + 5 + bob);
-  ctx.lineTo(sx + 14, sy + 11 + bob);
-  ctx.lineTo(sx + 8, sy + 14 + bob);
-  ctx.lineTo(sx + 2, sy + 11 + bob);
-  ctx.lineTo(sx + 2, sy + 5 + bob);
-  ctx.closePath();
-  ctx.fill();
-
-  // C label
-  ctx.fillStyle = C.dark;
-  ctx.font = 'bold 8px monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('C', sx + 8, sy + 10 + bob);
+// ============================================================
+// MINIGAME: CYCLE BURN (overlay)
+// ============================================================
+function initBurn(){
+  state.burnBudget=200;state.burnCursor=0;
+  state.burnCanisters=[
+    {name:'DeFi Exchange',utility:9,cost:80,desc:'High-volume DEX serving thousands of users'},
+    {name:'NFT Gallery',utility:4,cost:60,desc:'Vanity project with 12 visitors/month'},
+    {name:'DAO Governance',utility:8,cost:50,desc:'NNS voting interface used by stakers'},
+    {name:'Spam Bot',utility:1,cost:90,desc:'Generates junk transactions for wash volume'},
+    {name:'Identity Service',utility:10,cost:70,desc:'Internet Identity — millions depend on it'},
+  ];
+  state.burnAllocated=state.burnCanisters.map(()=>0);
+  state.screen='minigame_burn';mgCanvas.style.display='block';
 }
-
-function drawParticles() {
-  state.particles = state.particles.filter(p => p.life > 0);
-  state.particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.life -= 0.02;
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = p.life;
-    ctx.fillRect(p.x - state.camera.x, p.y - state.camera.y, p.size, p.size);
-    ctx.globalAlpha = 1;
+function renderBurn(){
+  mgCtx.clearRect(0,0,800,600);mgCtx.fillStyle='rgba(14,3,31,0.95)';mgCtx.fillRect(0,0,800,600);
+  mgCtx.fillStyle=C.orange;mgCtx.font='bold 18px monospace';mgCtx.textAlign='center';mgCtx.fillText('CYCLE BURN CHALLENGE',400,40);
+  const spent=state.burnAllocated.reduce((a,b)=>a+b,0),rem=state.burnBudget-spent;
+  mgCtx.fillStyle=rem<0?C.red:C.lime;mgCtx.font='14px monospace';mgCtx.fillText(`Budget: ${rem}/${state.burnBudget} cycles remaining`,400,65);
+  state.burnCanisters.forEach((c,i)=>{
+    const y=100+i*85,sel=state.burnCursor===i;
+    mgCtx.fillStyle=sel?'rgba(82,39,133,0.5)':'rgba(26,10,46,0.3)';mgCtx.fillRect(80,y,640,70);
+    if(sel){mgCtx.strokeStyle=C.cyan;mgCtx.lineWidth=2;mgCtx.strokeRect(80,y,640,70);}
+    mgCtx.fillStyle='#fff';mgCtx.font='bold 14px monospace';mgCtx.textAlign='left';mgCtx.fillText(c.name,100,y+22);
+    mgCtx.fillStyle='#8a7aa0';mgCtx.font='11px monospace';mgCtx.fillText(c.desc,100,y+40);
+    mgCtx.fillStyle='#1a0a2e';mgCtx.fillRect(100,y+50,100,8);
+    mgCtx.fillStyle=c.utility>=7?C.lime:c.utility>=4?C.orange:C.red;mgCtx.fillRect(100,y+50,c.utility*10,8);
+    mgCtx.fillStyle='#8a7aa0';mgCtx.font='9px monospace';mgCtx.fillText(`Utility: ${c.utility}/10`,210,y+58);
+    mgCtx.fillStyle='#e0e0e0';mgCtx.font='12px monospace';mgCtx.textAlign='right';mgCtx.fillText(`Cost: ${c.cost}`,700,y+22);
+    const a=state.burnAllocated[i],bx=450,bw=200;
+    mgCtx.fillStyle='#1a0a2e';mgCtx.fillRect(bx,y+45,bw,14);
+    mgCtx.fillStyle=a>=c.cost?C.lime:a>0?C.cyan:'#333';mgCtx.fillRect(bx,y+45,c.cost>0?(a/c.cost)*bw:0,14);
+    mgCtx.fillStyle='#fff';mgCtx.font='10px monospace';mgCtx.textAlign='center';mgCtx.fillText(`${a}/${c.cost}`,bx+bw/2,y+56);
+    mgCtx.textAlign='right';mgCtx.fillStyle=a>=c.cost?C.lime:a>0?C.cyan:'#555';mgCtx.fillText(a>=c.cost?'FUNDED':a>0?'PARTIAL':'UNFUNDED',700,y+58);
   });
+  mgCtx.fillStyle='rgba(14,3,31,0.8)';mgCtx.fillRect(150,555,500,30);mgCtx.fillStyle='#8a7aa0';mgCtx.font='12px monospace';mgCtx.textAlign='center';
+  mgCtx.fillText('UP/DOWN select | LEFT/RIGHT adjust (SHIFT +10) | ENTER submit',400,574);
 }
-
-function drawFloatingTexts() {
-  state.floatingTexts = state.floatingTexts.filter(t => t.life > 0);
-  state.floatingTexts.forEach(t => {
-    t.y -= 0.5;
-    t.life -= 0.015;
-    ctx.fillStyle = t.color;
-    ctx.globalAlpha = t.life;
-    ctx.font = 'bold 12px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(t.text, t.x - state.camera.x, t.y - state.camera.y);
-    ctx.globalAlpha = 1;
+function submitBurn(){
+  if(state.burnAllocated.reduce((a,b)=>a+b,0)>state.burnBudget)return;
+  mgCanvas.style.display='none';state.screen='playing';
+  let score=0;state.burnCanisters.forEach((c,i)=>{
+    const funded=state.burnAllocated[i]>=c.cost;
+    if(funded&&c.utility>=7)score+=25;if(funded&&c.utility<3)score-=20;
+    if(!funded&&c.utility>=8)score-=15;if(!funded&&c.utility<3)score+=10;
   });
-}
-
-function drawZoneLabel() {
-  const ptx = Math.floor((state.player.x + 16) / TILE);
-  const pty = Math.floor((state.player.y + 16) / TILE);
-  const zone = getZoneAt(ptx, pty);
-  if (zone) {
-    ctx.fillStyle = zone.color;
-    ctx.globalAlpha = 0.15;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 1;
-
-    ctx.fillStyle = zone.color;
-    ctx.font = 'bold 14px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('— ' + zone.name + ' —', canvas.width / 2, 55);
+  if(score>=30&&!state.quests.cycle_burn.done){
+    state.quests.cycle_burn.done=true;state.questsCompleted++;state.cycles+=80;updateHUD();
+    spawnBurst(state.player.x+16,state.player.y+16);
+    showSideDialogue(npcs.find(n=>n.id==='burn_master'),'dialoguesDone');
+    if(state.questsCompleted>=state.totalQuests)setTimeout(showCompletion,500);
+  }else if(score<30){
+    state.dialogueQueue=[{speaker:'TREASURER',text:"Allocation wasn't optimal. Fund high-utility canisters, skip the junk. Try again!"}];
+    state.dialogueIndex=0;state.screen='dialogue';showDialogue();
   }
 }
 
-function drawMinimap() {
-  const mw = minimapCanvas.width;
-  const mh = minimapCanvas.height;
-  const sx = mw / COLS;
-  const sy = mh / ROWS;
+// ============================================================
+// MINIGAME: CANISTER ASSEMBLY (overlay)
+// ============================================================
+function initAssembly(){
+  state.assemblyOrder=[];state.assemblyCursor=0;
+  state.screen='minigame_assembly';mgCanvas.style.display='block';
+}
+function renderAssembly(){
+  mgCtx.clearRect(0,0,800,600);mgCtx.fillStyle='rgba(14,3,31,0.95)';mgCtx.fillRect(0,0,800,600);
+  mgCtx.fillStyle='#b055e2';mgCtx.font='bold 18px monospace';mgCtx.textAlign='center';mgCtx.fillText('CANISTER ASSEMBLY',400,40);
+  mgCtx.fillStyle='#8a7aa0';mgCtx.font='12px monospace';mgCtx.fillText('Arrange: MODULE → STABLE → PUBLIC → SYSTEM',400,65);
+  const avail=[0,1,2,3].filter(i=>!state.assemblyOrder.includes(i));
+  mgCtx.fillStyle='#e0e0e0';mgCtx.font='14px monospace';mgCtx.textAlign='left';mgCtx.fillText('Available:',80,110);
+  avail.forEach((fid,idx)=>{
+    const x=80+idx*160,y=130,sel=state.assemblyCursor===idx;
+    mgCtx.fillStyle=sel?'rgba(176,85,226,0.4)':'rgba(26,10,46,0.4)';mgCtx.fillRect(x,y,140,60);
+    if(sel){mgCtx.strokeStyle='#b055e2';mgCtx.lineWidth=2;mgCtx.strokeRect(x,y,140,60);}
+    mgCtx.fillStyle=fragmentColors[fid];mgCtx.font='bold 16px monospace';mgCtx.textAlign='center';mgCtx.fillText(fragmentNames[fid],x+70,y+35);
+  });
+  mgCtx.fillStyle='#e0e0e0';mgCtx.font='14px monospace';mgCtx.textAlign='left';mgCtx.fillText('Assembly order:',80,230);
+  for(let i=0;i<4;i++){
+    const x=80+i*170,y=250;mgCtx.fillStyle='rgba(26,10,46,0.5)';mgCtx.fillRect(x,y,150,70);mgCtx.strokeStyle='#3a2060';mgCtx.lineWidth=1;mgCtx.strokeRect(x,y,150,70);
+    mgCtx.fillStyle='#555';mgCtx.font='10px monospace';mgCtx.textAlign='center';mgCtx.fillText(`Slot ${i+1}`,x+75,y+15);
+    if(state.assemblyOrder[i]!==undefined){
+      const fid=state.assemblyOrder[i],correct=[0,1,2,3][i]===fid;
+      mgCtx.fillStyle=fragmentColors[fid];mgCtx.font='bold 16px monospace';mgCtx.fillText(fragmentNames[fid],x+75,y+45);
+      if(state.assemblyOrder.length===4){mgCtx.fillStyle=correct?C.lime:C.red;mgCtx.fillText(correct?'✓':'✕',x+75,y+63);}
+    }else{mgCtx.fillStyle='#333';mgCtx.font='24px monospace';mgCtx.textAlign='center';mgCtx.fillText('?',x+75,y+50);}
+  }
+  // Code preview
+  mgCtx.fillStyle='rgba(10,20,30,0.8)';mgCtx.fillRect(80,350,640,170);
+  ['// Motoko Canister Structure:','','actor class MyCanister() {    // ← MODULE','  stable var count : Nat = 0; // ← STABLE','  public func increment() {   // ← PUBLIC','    count += 1;','  };','  system func heartbeat() {   // ← SYSTEM','    // periodic task','  };','};'].forEach((l,i)=>{
+    mgCtx.fillStyle=l.includes('←')?C.lime:'#8a7aa0';mgCtx.font='11px monospace';mgCtx.textAlign='left';mgCtx.fillText(l,100,375+i*14);
+  });
+  mgCtx.fillStyle='rgba(14,3,31,0.8)';mgCtx.fillRect(200,555,400,30);mgCtx.fillStyle='#8a7aa0';mgCtx.font='12px monospace';mgCtx.textAlign='center';
+  mgCtx.fillText(state.assemblyOrder.length===4?'BACKSPACE undo | ENTER deploy':'LEFT/RIGHT select | SPACE place',400,574);
+}
+function submitAssembly(){
+  if(state.assemblyOrder.length!==4)return;
+  const correct=state.assemblyOrder.every((v,i)=>v===[0,1,2,3][i]);
+  mgCanvas.style.display='none';state.screen='playing';
+  if(correct&&!state.quests.canister_assembly.done){
+    state.quests.canister_assembly.done=true;state.questsCompleted++;state.cycles+=80;updateHUD();
+    spawnBurst(state.player.x+16,state.player.y+16);
+    showSideDialogue(npcs.find(n=>n.id==='assembler'),'dialoguesDone');
+    if(state.questsCompleted>=state.totalQuests)setTimeout(showCompletion,500);
+  }else if(!correct){
+    state.dialogueQueue=[{speaker:'DEPLOYER',text:"Wrong order! Remember: MODULE → STABLE → PUBLIC → SYSTEM. Try again!"}];
+    state.dialogueIndex=0;state.screen='dialogue';showDialogue();
+  }
+}
 
-  minimapCtx.fillStyle = C.bg;
-  minimapCtx.fillRect(0, 0, mw, mh);
+// ============================================================
+// GAME LOGIC
+// ============================================================
+function isWalkable(x,y){
+  const tx=Math.floor(x/TILE),ty=Math.floor(y/TILE);
+  if(tx<0||tx>=COLS||ty<0||ty>=ROWS)return false;
+  const t=world[ty][tx];return t!==0&&t!==3&&t!==4; // void, wall, water block (14,15 = fake walls, passable)
+}
 
-  for (let y = 0; y < ROWS; y++) {
-    for (let x = 0; x < COLS; x++) {
-      const t = world[y][x];
-      let col = null;
-      if (t === 3) col = '#1a0830';
-      else if (t === 4) col = C.water;
-      else if (t === 2) col = C.path;
-      else if (t === 5 || t === 6) {
-        const z = getZoneAt(x, y);
-        col = z ? z.color : C.purple;
+function updatePlayer(){
+  if(state.screen!=='playing')return;
+  const k=state.keys;let dx=0,dy=0;
+  if(k.ArrowUp||k.w||k.W){dy=-PLAYER_SPEED;state.player.dir='up';}
+  if(k.ArrowDown||k.s||k.S){dy=PLAYER_SPEED;state.player.dir='down';}
+  if(k.ArrowLeft||k.a||k.A){dx=-PLAYER_SPEED;state.player.dir='left';}
+  if(k.ArrowRight||k.d||k.D){dx=PLAYER_SPEED;state.player.dir='right';}
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  const hx=10,hy=14,hw=12,hh=16;
+  if(dx){const nx=state.player.x+dx;if(isWalkable(nx+hx,state.player.y+hy)&&isWalkable(nx+hx+hw,state.player.y+hy)&&isWalkable(nx+hx,state.player.y+hy+hh)&&isWalkable(nx+hx+hw,state.player.y+hy+hh))state.player.x=nx;}
+  if(dy){const ny=state.player.y+dy;if(isWalkable(state.player.x+hx,ny+hy)&&isWalkable(state.player.x+hx+hw,ny+hy)&&isWalkable(state.player.x+hx,ny+hy+hh)&&isWalkable(state.player.x+hx+hw,ny+hy+hh))state.player.y=ny;}
+
+  // Pickups
+  pickups.forEach(p=>{if(p.collected)return;if(Math.hypot((state.player.x+16)-p.x,(state.player.y+16)-p.y)<24){p.collected=true;state.cycles+=10;for(let i=0;i<8;i++)state.particles.push({x:p.x,y:p.y,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,life:1,size:3,color:C.lime});state.floatingTexts.push({x:p.x,y:p.y,text:'+10 CYCLES',color:C.lime,life:1});updateHUD();}});
+
+  // Fragments
+  codeFragments.forEach(f=>{if(f.collected)return;if(Math.hypot((state.player.x+16)-(f.x+16),(state.player.y+16)-(f.y+16))<30){f.collected=true;state.fragments.pieces[f.id]=true;state.fragments.collected++;for(let i=0;i<12;i++)state.particles.push({x:f.x+16,y:f.y+16,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1,size:4,color:fragmentColors[f.id]});state.floatingTexts.push({x:f.x+16,y:f.y+16,text:`${f.name} FRAGMENT`,color:'#b055e2',life:1.5});updateHUD();}});
+
+  // Vault core check
+  const ptx=Math.floor((state.player.x+16)/TILE),pty=Math.floor((state.player.y+16)/TILE);
+  if(world[pty]&&world[pty][ptx]===12&&!state.quests.swiss_vault.done){
+    state.quests.swiss_vault.done=true;state.questsCompleted++;state.cycles+=80;updateHUD();
+    spawnBurst(state.player.x+16,state.player.y+16);
+    showSideDialogue(npcs.find(n=>n.id==='vault_hint'),'dialoguesDone');
+    if(state.questsCompleted>=state.totalQuests)setTimeout(showCompletion,500);
+  }
+}
+
+function updateCamera(){
+  const tx=state.player.x-canvas.width/2+16,ty=state.player.y-canvas.height/2+16;
+  state.camera.x+=(tx-state.camera.x)*0.1;state.camera.y+=(ty-state.camera.y)*0.1;
+  state.camera.x=Math.max(0,Math.min(COLS*TILE-canvas.width,state.camera.x));
+  state.camera.y=Math.max(0,Math.min(ROWS*TILE-canvas.height,state.camera.y));
+}
+
+function checkNPCInteraction(){
+  for(const npc of npcs){
+    const dist=Math.hypot((state.player.x+16)-(npc.x+16),(state.player.y+16)-(npc.y+16));
+    if(dist<44){
+      const q=state.quests[npc.quest];
+      if(npc.isSideQuest){
+        if(q.done){showSideDialogue(npc,'dialoguesDone');return true;}
+        switch(npc.isSideQuest){
+          case'canister_assembly':
+            if(state.fragments.collected>=4){state.currentNPC=npc;state.dialogueQueue=npc.dialoguesReady;state.dialogueIndex=0;state.screen='dialogue';state._afterDialogue='assembly';showDialogue();}
+            else{state.currentNPC=npc;state.dialogueQueue=npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';showDialogue();}return true;
+          case'ddos_defense':state.currentNPC=npc;state.dialogueQueue=npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';state._afterDialogue='ddos';showDialogue();return true;
+          case'cycle_burn':state.currentNPC=npc;state.dialogueQueue=npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';state._afterDialogue='burn';showDialogue();return true;
+          case'swiss_vault':state.currentNPC=npc;state.dialogueQueue=q.done?npc.dialoguesDone:npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';showDialogue();return true;
+        }
       }
-      if (col) {
-        minimapCtx.fillStyle = col;
-        minimapCtx.globalAlpha = t === 5 || t === 6 ? 0.5 : 0.7;
-        minimapCtx.fillRect(x * sx, y * sy, sx + 0.5, sy + 0.5);
-        minimapCtx.globalAlpha = 1;
-      }
+      state.currentNPC=npc;state.dialogueQueue=npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';showDialogue();return true;
     }
-  }
-
-  // Player dot
-  const px = (state.player.x / TILE) * sx;
-  const py = (state.player.y / TILE) * sy;
-  minimapCtx.fillStyle = C.cyan;
-  minimapCtx.fillRect(px - 1, py - 1, 3, 3);
-
-  // NPC dots
-  npcs.forEach(npc => {
-    const nx = (npc.x / TILE) * sx;
-    const ny = (npc.y / TILE) * sy;
-    minimapCtx.fillStyle = state.quests[npc.quest].done ? '#555' : npc.color;
-    minimapCtx.fillRect(nx - 1, ny - 1, 2, 2);
-  });
+  }return false;
 }
 
-// --- UPDATE ---
-function updateCamera() {
-  const targetX = state.player.x - canvas.width / 2 + 16;
-  const targetY = state.player.y - canvas.height / 2 + 16;
-  state.camera.x += (targetX - state.camera.x) * 0.1;
-  state.camera.y += (targetY - state.camera.y) * 0.1;
-
-  // Clamp
-  state.camera.x = Math.max(0, Math.min(COLS * TILE - canvas.width, state.camera.x));
-  state.camera.y = Math.max(0, Math.min(ROWS * TILE - canvas.height, state.camera.y));
+function showSideDialogue(npc,key){state.currentNPC=npc;state.dialogueQueue=npc[key]||npc.dialogues;state.dialogueIndex=0;state.screen='dialogue';showDialogue();}
+function showDialogue(){
+  const box=document.getElementById('dialogue-box'),d=state.dialogueQueue[state.dialogueIndex];
+  if(!d){closeDialogue();return;}box.style.display='block';
+  box.querySelector('.speaker').textContent=d.speaker==='QUEST'?'★ QUEST':d.speaker;
+  box.querySelector('.text').textContent=d.text;
+  box.querySelector('.prompt').textContent=state.dialogueIndex<state.dialogueQueue.length-1?'▼ SPACE to continue':'▼ SPACE to close';
 }
-
-function isWalkable(x, y) {
-  const tx = Math.floor(x / TILE);
-  const ty = Math.floor(y / TILE);
-  if (tx < 0 || tx >= COLS || ty < 0 || ty >= ROWS) return false;
-  const t = world[ty][tx];
-  return t !== 3 && t !== 4; // walls and water block
-}
-
-function updatePlayer() {
-  if (state.screen !== 'playing') return;
-  const k = state.keys;
-  let dx = 0, dy = 0;
-
-  if (k.ArrowUp || k.w || k.W) { dy = -PLAYER_SPEED; state.player.dir = 'up'; }
-  if (k.ArrowDown || k.s || k.S) { dy = PLAYER_SPEED; state.player.dir = 'down'; }
-  if (k.ArrowLeft || k.a || k.A) { dx = -PLAYER_SPEED; state.player.dir = 'left'; }
-  if (k.ArrowRight || k.d || k.D) { dx = PLAYER_SPEED; state.player.dir = 'right'; }
-
-  // Normalize diagonal
-  if (dx !== 0 && dy !== 0) {
-    dx *= 0.707;
-    dy *= 0.707;
-  }
-
-  const newX = state.player.x + dx;
-  const newY = state.player.y + dy;
-
-  // Collision check (4 corners of player hitbox)
-  const hx = 10, hy = 14, hw = 12, hh = 16;
-  if (dx !== 0) {
-    if (isWalkable(newX + hx, state.player.y + hy) &&
-        isWalkable(newX + hx + hw, state.player.y + hy) &&
-        isWalkable(newX + hx, state.player.y + hy + hh) &&
-        isWalkable(newX + hx + hw, state.player.y + hy + hh)) {
-      state.player.x = newX;
-    }
-  }
-  if (dy !== 0) {
-    if (isWalkable(state.player.x + hx, newY + hy) &&
-        isWalkable(state.player.x + hx + hw, newY + hy) &&
-        isWalkable(state.player.x + hx, newY + hy + hh) &&
-        isWalkable(state.player.x + hx + hw, newY + hy + hh)) {
-      state.player.y = newY;
-    }
-  }
-
-  // Pickup collection
-  pickups.forEach(p => {
-    if (p.collected) return;
-    const dist = Math.hypot((state.player.x + 16) - p.x, (state.player.y + 16) - p.y);
-    if (dist < 24) {
-      p.collected = true;
-      state.cycles += 10;
-      // Particles
-      for (let i = 0; i < 8; i++) {
-        state.particles.push({
-          x: p.x, y: p.y,
-          vx: (Math.random() - 0.5) * 3,
-          vy: (Math.random() - 0.5) * 3,
-          life: 1, size: 3, color: C.lime,
-        });
-      }
-      state.floatingTexts.push({
-        x: p.x, y: p.y, text: '+10 CYCLES', color: C.lime, life: 1
-      });
-      document.getElementById('cycles').textContent = `Cycles: ${state.cycles}`;
-    }
-  });
-
-  // NPC interaction proximity
-  npcs.forEach(npc => {
-    const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
-    if (dist < 40 && !state.quests[npc.quest].talked && state.screen === 'playing') {
-      // Show interact hint handled in render
-    }
-  });
-}
-
-function checkNPCInteraction() {
-  for (const npc of npcs) {
-    const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
-    if (dist < 44) {
-      state.currentNPC = npc;
-      state.dialogueQueue = npc.dialogues;
-      state.dialogueIndex = 0;
-      state.screen = 'dialogue';
-      showDialogue();
-      return true;
-    }
-  }
-  return false;
-}
-
-function showDialogue() {
-  const box = document.getElementById('dialogue-box');
-  const d = state.dialogueQueue[state.dialogueIndex];
-  if (!d) {
-    closeDialogue();
-    return;
-  }
-
-  box.style.display = 'block';
-  box.querySelector('.speaker').textContent = d.speaker === 'QUEST' ? '★ QUEST' : d.speaker;
-  box.querySelector('.text').textContent = d.text;
-  box.querySelector('.prompt').textContent = state.dialogueIndex < state.dialogueQueue.length - 1
-    ? '▼ SPACE to continue'
-    : '▼ SPACE to close';
-}
-
-function advanceDialogue() {
+function advanceDialogue(){
   state.dialogueIndex++;
-  if (state.dialogueIndex >= state.dialogueQueue.length) {
-    // Complete quest if not done
-    if (state.currentNPC && !state.quests[state.currentNPC.quest].done) {
-      state.quests[state.currentNPC.quest].done = true;
-      state.quests[state.currentNPC.quest].talked = true;
-      state.questsCompleted++;
-      state.cycles += 50;
-      document.getElementById('quest-count').textContent = `Quests: ${state.questsCompleted}/${state.totalQuests}`;
-      document.getElementById('cycles').textContent = `Cycles: ${state.cycles}`;
-
-      // Big particle burst
-      for (let i = 0; i < 20; i++) {
-        state.particles.push({
-          x: state.currentNPC.x + 16,
-          y: state.currentNPC.y + 16,
-          vx: (Math.random() - 0.5) * 5,
-          vy: (Math.random() - 0.5) * 5,
-          life: 1, size: 4,
-          color: [C.cyan, C.lime, C.purple][Math.floor(Math.random() * 3)],
-        });
-      }
-
-      if (state.questsCompleted >= state.totalQuests) {
-        setTimeout(showCompletion, 500);
-      }
-    } else if (state.currentNPC) {
-      state.quests[state.currentNPC.quest].talked = true;
+  if(state.dialogueIndex>=state.dialogueQueue.length){
+    const after=state._afterDialogue;state._afterDialogue=null;
+    if(state.currentNPC&&!state.currentNPC.isSideQuest&&!state.quests[state.currentNPC.quest].done){
+      state.quests[state.currentNPC.quest].done=true;state.questsCompleted++;state.cycles+=50;updateHUD();
+      spawnBurst(state.currentNPC.x+16,state.currentNPC.y+16);
+      if(state.questsCompleted>=state.totalQuests)setTimeout(showCompletion,500);
     }
     closeDialogue();
+    if(after==='assembly')setTimeout(initAssembly,200);
+    else if(after==='ddos')setTimeout(initDDoS,200);
+    else if(after==='burn')setTimeout(initBurn,200);
     return;
-  }
-  showDialogue();
+  }showDialogue();
+}
+function closeDialogue(){document.getElementById('dialogue-box').style.display='none';state.screen='playing';state.currentNPC=null;}
+
+function showCompletion(){
+  state.screen='completion';document.getElementById('completion-screen').style.display='flex';
+  const m=['internet_computer','caffeine','self_writing','cloud_engines','mission70'].filter(k=>state.quests[k].done).length;
+  const s=['canister_assembly','swiss_vault','cycle_burn','ddos_defense'].filter(k=>state.quests[k].done).length;
+  document.getElementById('completion-text').textContent="You've explored the entire Internet Computer ecosystem — from sovereign cloud infrastructure to self-writing applications, from the physical Cloud Engines to the tokenomics of Mission 70. The future of computing isn't owned by corporations. It's owned by its users.";
+  document.getElementById('completion-stats').textContent=`Main quests: ${m}/5 | Side quests: ${s}/4 | Cycles: ${state.cycles} | Rating: ${'★'.repeat(Math.min(5,Math.floor((m+s)/2)))}`;
 }
 
-function closeDialogue() {
-  document.getElementById('dialogue-box').style.display = 'none';
-  state.screen = 'playing';
-  state.currentNPC = null;
+function updateQuestLog(){
+  const log=document.getElementById('quest-log');
+  if(state.keys.Tab||state.keys.q||state.keys.Q){
+    log.style.display='block';
+    let h='<h3>QUEST LOG</h3><div class="section">MAIN QUESTS</div>';
+    ['internet_computer','caffeine','self_writing','cloud_engines','mission70'].forEach(id=>{const q=state.quests[id];h+=`<div class="quest ${q.done?'done':''}">${q.done?'✓':'○'} ${q.name}</div>`;});
+    h+='<div class="section">SIDE QUESTS</div>';
+    ['canister_assembly','swiss_vault','cycle_burn','ddos_defense'].forEach(id=>{const q=state.quests[id];h+=`<div class="quest ${q.done?'done':''}">${q.done?'✓':'○'} ${q.name}</div>`;});
+    log.innerHTML=h;
+  }else log.style.display='none';
 }
 
-function showCompletion() {
-  state.screen = 'completion';
-  const screen = document.getElementById('completion-screen');
-  screen.style.display = 'flex';
-  document.getElementById('completion-text').textContent =
-    "You've explored the entire Internet Computer ecosystem — from sovereign cloud infrastructure to self-writing applications, " +
-    "from the physical Cloud Engines to the tokenomics of Mission 70. The future of computing isn't owned by corporations. It's owned by its users.";
-  document.getElementById('completion-stats').textContent =
-    `Quests completed: ${state.questsCompleted}/${state.totalQuests} | Cycles collected: ${state.cycles} | Explorer rating: ★★★★★`;
+function updateHUD(){
+  document.getElementById('quest-count').textContent=`Quests: ${state.questsCompleted}/${state.totalQuests}`;
+  document.getElementById('cycles').textContent=`Cycles: ${state.cycles}`;
+  const fh=document.getElementById('fragments-hud');
+  if(state.fragments.collected>0&&!state.quests.canister_assembly.done){fh.style.display='block';fh.textContent=`Fragments: ${state.fragments.collected}/4`;}else fh.style.display='none';
 }
 
-function updateQuestLog() {
-  const log = document.getElementById('quest-log');
-  const anyActive = Object.values(state.quests).some(q => !q.done);
-  if (state.keys.Tab || state.keys.q || state.keys.Q) {
-    log.style.display = 'block';
-    let html = '<h3>QUEST LOG</h3>';
-    for (const [id, q] of Object.entries(state.quests)) {
-      html += `<div class="quest ${q.done ? 'done' : ''}">${q.done ? '✓' : '○'} ${q.name}</div>`;
-    }
-    log.innerHTML = html;
-  } else {
-    log.style.display = 'none';
-  }
-}
+function spawnBurst(x,y){for(let i=0;i<20;i++)state.particles.push({x,y,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,life:1,size:4,color:[C.cyan,C.lime,C.purple][Math.floor(Math.random()*3)]});}
 
-// --- MAIN RENDER ---
-function render() {
-  ctx.fillStyle = C.bg;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  const startCol = Math.max(0, Math.floor(state.camera.x / TILE));
-  const startRow = Math.max(0, Math.floor(state.camera.y / TILE));
-  const endCol = Math.min(COLS, startCol + VIEW_COLS + 2);
-  const endRow = Math.min(ROWS, startRow + VIEW_ROWS + 2);
-
-  // Draw tiles
-  for (let y = startRow; y < endRow; y++) {
-    for (let x = startCol; x < endCol; x++) {
-      const sx = x * TILE - state.camera.x;
-      const sy = y * TILE - state.camera.y;
-      const t = world[y][x];
-      const zone = getZoneAt(x, y);
-
-      switch(t) {
-        case 1: drawKeyTile(sx, sy, x, y, false); break;
-        case 2: drawPath(sx, sy); break;
-        case 3: drawWall(sx, sy); break;
-        case 4: drawWater(sx, sy, state.time); break;
-        case 5: drawKeyTile(sx, sy, x, y, true, zone?.color); break;
-        case 6: drawZoneBorder(sx, sy, zone?.color); break;
-      }
+// ============================================================
+// MAIN RENDER
+// ============================================================
+function render(){
+  ctx.fillStyle=C.bg;ctx.fillRect(0,0,canvas.width,canvas.height);
+  const sc=Math.max(0,Math.floor(state.camera.x/TILE)),sr=Math.max(0,Math.floor(state.camera.y/TILE));
+  const ec=Math.min(COLS,sc+VIEW_COLS+2),er=Math.min(ROWS,sr+VIEW_ROWS+2);
+  for(let y=sr;y<er;y++)for(let x=sc;x<ec;x++){
+    const sx=x*TILE-state.camera.x,sy=y*TILE-state.camera.y,t=world[y][x],zone=getZoneAt(x,y);
+    switch(t){
+      case 1:drawKeyTile(sx,sy,x,y,false);break;case 2:drawPath(sx,sy);break;case 3:drawWall(sx,sy);break;
+      case 4:drawWater(sx,sy);break;case 5:drawKeyTile(sx,sy,x,y,true,zone?.color);break;
+      case 6:drawZoneBorder(sx,sy,zone?.color);break;
+      case 14:drawFakeWall(sx,sy);break;case 15:drawFakeWallClue(sx,sy);break;
+      case 8:case 9:case 10:case 11:drawRoomFloor(sx,sy,t);break;case 12:drawVaultCore(sx,sy);break;
     }
   }
-
-  // Draw pickups
-  pickups.forEach(p => {
-    if (p.collected) return;
-    const sx = p.x - state.camera.x;
-    const sy = p.y - state.camera.y;
-    if (sx > -20 && sx < canvas.width + 20 && sy > -20 && sy < canvas.height + 20) {
-      drawPickup(p, sx, sy);
-    }
-  });
-
-  // Draw NPCs
-  npcs.forEach(npc => {
-    const sx = npc.x - state.camera.x;
-    const sy = npc.y - state.camera.y;
-    if (sx > -40 && sx < canvas.width + 40 && sy > -40 && sy < canvas.height + 40) {
-      drawNPC(npc, sx, sy);
-    }
-  });
-
-  // Draw player
-  drawPlayer(state.player.x - state.camera.x, state.player.y - state.camera.y);
-
-  // Draw interaction hints
-  if (state.screen === 'playing') {
-    npcs.forEach(npc => {
-      const dist = Math.hypot((state.player.x + 16) - (npc.x + 16), (state.player.y + 16) - (npc.y + 16));
-      if (dist < 50) {
-        const sx = npc.x - state.camera.x;
-        const sy = npc.y - state.camera.y;
-        ctx.fillStyle = 'rgba(14,3,31,0.85)';
-        ctx.fillRect(sx - 10, sy + 34, 52, 16);
-        ctx.fillStyle = C.lime;
-        ctx.font = '10px monospace';
-        ctx.textAlign = 'center';
-        ctx.fillText('[SPACE]', sx + 16, sy + 46);
-      }
-    });
-  }
-
-  // Particles & floating text
-  drawParticles();
-  drawFloatingTexts();
-
-  // Zone overlay
-  drawZoneLabel();
-
-  // Controls hint
-  if (state.questsCompleted === 0 && state.screen === 'playing') {
-    ctx.fillStyle = 'rgba(14,3,31,0.7)';
-    ctx.fillRect(canvas.width/2 - 140, canvas.height - 35, 280, 25);
-    ctx.fillStyle = '#8a7aa0';
-    ctx.font = '11px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('Arrow keys / WASD to move  |  TAB for quest log', canvas.width/2, canvas.height - 19);
-  }
-
-  // Minimap
+  pickups.forEach(p=>{if(p.collected)return;const sx=p.x-state.camera.x,sy=p.y-state.camera.y;if(sx>-20&&sx<canvas.width+20&&sy>-20&&sy<canvas.height+20)drawPickup(p,sx,sy);});
+  codeFragments.forEach(f=>{if(f.collected)return;const sx=f.x-state.camera.x,sy=f.y-state.camera.y;if(sx>-40&&sx<canvas.width+40&&sy>-40&&sy<canvas.height+40)drawCodeFragment(f,sx,sy);});
+  npcs.forEach(n=>{const sx=n.x-state.camera.x,sy=n.y-state.camera.y;if(sx>-40&&sx<canvas.width+40&&sy>-40&&sy<canvas.height+40)drawNPC(n,sx,sy);});
+  drawPlayer(state.player.x-state.camera.x,state.player.y-state.camera.y);
+  if(state.screen==='playing')npcs.forEach(n=>{const d=Math.hypot((state.player.x+16)-(n.x+16),(state.player.y+16)-(n.y+16));if(d<50){const sx=n.x-state.camera.x,sy=n.y-state.camera.y;ctx.fillStyle='rgba(14,3,31,0.85)';ctx.fillRect(sx-10,sy+34,52,16);ctx.fillStyle=C.lime;ctx.font='10px monospace';ctx.textAlign='center';ctx.fillText('[SPACE]',sx+16,sy+46);}});
+  drawParticles();drawFloatingTexts();drawZoneLabel();
+  if(state.questsCompleted===0&&state.screen==='playing'){ctx.fillStyle='rgba(14,3,31,0.7)';ctx.fillRect(canvas.width/2-170,canvas.height-35,340,25);ctx.fillStyle='#8a7aa0';ctx.font='11px monospace';ctx.textAlign='center';ctx.fillText('WASD/Arrows move | TAB quest log | SPACE interact',canvas.width/2,canvas.height-19);}
   drawMinimap();
 }
 
-// --- GAME LOOP ---
-function gameLoop(timestamp) {
-  state.time = timestamp / 1000;
-
-  if (state.screen === 'playing') {
-    updatePlayer();
-    updateCamera();
-    updateQuestLog();
-  }
-
-  if (state.screen !== 'title') {
-    render();
-  }
-
+// ============================================================
+// GAME LOOP
+// ============================================================
+let lastTime=0;
+function gameLoop(ts){
+  const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;state.time=ts/1000;
+  if(state.screen==='playing'){updatePlayer();updateCamera();updateQuestLog();}
+  else if(state.screen==='minigame_ddos'){updateDDoS(dt);renderDDoS();}
+  else if(state.screen==='minigame_burn')renderBurn();
+  else if(state.screen==='minigame_assembly')renderAssembly();
+  if(!['title','minigame_ddos','minigame_burn','minigame_assembly'].includes(state.screen))render();
   requestAnimationFrame(gameLoop);
 }
 
-// --- INPUT ---
-document.addEventListener('keydown', (e) => {
-  state.keys[e.key] = true;
-
-  if (state.screen === 'title' && (e.key === ' ' || e.key === 'Enter')) {
-    e.preventDefault();
-    state.screen = 'playing';
-    document.getElementById('title-screen').style.display = 'none';
-    // Position player at center of map
-    state.player.x = 20 * TILE;
-    state.player.y = 12 * TILE;
-    state.camera.x = state.player.x - canvas.width / 2;
-    state.camera.y = state.player.y - canvas.height / 2;
-    return;
-  }
-
-  if (state.screen === 'dialogue' && (e.key === ' ' || e.key === 'Enter')) {
-    e.preventDefault();
-    advanceDialogue();
-    return;
-  }
-
-  if (state.screen === 'playing' && (e.key === ' ' || e.key === 'Enter')) {
-    e.preventDefault();
-    checkNPCInteraction();
-  }
-
-  if (state.screen === 'completion' && (e.key === ' ' || e.key === 'Enter')) {
-    e.preventDefault();
-    state.screen = 'playing';
-    document.getElementById('completion-screen').style.display = 'none';
-  }
-
-  // Prevent scrolling
-  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Tab'].includes(e.key)) {
-    e.preventDefault();
-  }
+// ============================================================
+// INPUT
+// ============================================================
+document.addEventListener('keydown',e=>{
+  state.keys[e.key]=true;
+  if(state.screen==='title'&&(e.key===' '||e.key==='Enter')){e.preventDefault();state.screen='playing';document.getElementById('title-screen').style.display='none';state.player.x=40*TILE;state.player.y=32*TILE;state.camera.x=state.player.x-canvas.width/2;state.camera.y=state.player.y-canvas.height/2;return;}
+  if(state.screen==='dialogue'&&(e.key===' '||e.key==='Enter')){e.preventDefault();advanceDialogue();return;}
+  if(state.screen==='playing'&&(e.key===' '||e.key==='Enter')){e.preventDefault();checkNPCInteraction();}
+  if(state.screen==='completion'&&(e.key===' '||e.key==='Enter')){e.preventDefault();state.screen='playing';document.getElementById('completion-screen').style.display='none';}
+  if(state.screen==='minigame_ddos'){if(e.key==='1')blockLane(0);if(e.key==='2')blockLane(1);if(e.key==='3')blockLane(2);if(e.key==='4')blockLane(3);if(e.key==='Escape')finishDDoS();e.preventDefault();}
+  if(state.screen==='minigame_burn'){const step=e.shiftKey?10:5;if(e.key==='ArrowUp')state.burnCursor=Math.max(0,state.burnCursor-1);if(e.key==='ArrowDown')state.burnCursor=Math.min(4,state.burnCursor+1);if(e.key==='ArrowRight'){const c=state.burnCanisters[state.burnCursor];state.burnAllocated[state.burnCursor]=Math.min(c.cost,state.burnAllocated[state.burnCursor]+step);}if(e.key==='ArrowLeft')state.burnAllocated[state.burnCursor]=Math.max(0,state.burnAllocated[state.burnCursor]-step);if(e.key==='Enter')submitBurn();if(e.key==='Escape'){mgCanvas.style.display='none';state.screen='playing';}e.preventDefault();}
+  if(state.screen==='minigame_assembly'){const avail=[0,1,2,3].filter(i=>!state.assemblyOrder.includes(i));if(e.key==='ArrowLeft')state.assemblyCursor=Math.max(0,state.assemblyCursor-1);if(e.key==='ArrowRight')state.assemblyCursor=Math.min(avail.length-1,state.assemblyCursor+1);if(e.key===' '&&avail.length){state.assemblyOrder.push(avail[state.assemblyCursor%avail.length]);state.assemblyCursor=0;}if(e.key==='Backspace'&&state.assemblyOrder.length)state.assemblyOrder.pop();if(e.key==='Enter'&&state.assemblyOrder.length===4)submitAssembly();if(e.key==='Escape'){mgCanvas.style.display='none';state.screen='playing';}e.preventDefault();}
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Tab'].includes(e.key))e.preventDefault();
 });
+document.addEventListener('keyup',e=>{state.keys[e.key]=false;});
 
-document.addEventListener('keyup', (e) => {
-  state.keys[e.key] = false;
-});
-
-// --- START ---
 requestAnimationFrame(gameLoop);
 </script>
 </body>
